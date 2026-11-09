@@ -1,1 +1,1 @@
-v32: Add workout days without client, duplicate days with custom name, add rest days, insert warm up/cardio/resistance/cooldown/stretches section headings. Back up before updating.
+v34: fixes section dropdown resetting before Add heading is clicked. Upload entire ZIP contents to GitHub Pages root; backup records before updating.
