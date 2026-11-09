@@ -1,1 +1,1 @@
-Fitness Programme Manager v31 — added 24 full-body stretching exercises with individual muscle groups and technique instructions. Upload all files and icons folder to GitHub Pages. Existing client records are preserved in browser storage; back up before updating. Exercise demonstration links use existing technique search functionality. Test with fictional clients first.
+v32: Add workout days without client, duplicate days with custom name, add rest days, insert warm up/cardio/resistance/cooldown/stretches section headings. Back up before updating.
