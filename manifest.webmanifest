@@ -2,9 +2,9 @@
   "name": "Fitness Programme Manager Pro",
   "short_name": "Fitness Manager",
   "description": "Client fitness programmes, challenges and training calendar",
-  "id": "./",
-  "start_url": "./",
-  "scope": "./",
+  "id": "/fitness-programme-manager/",
+  "start_url": "/fitness-programme-manager/",
+  "scope": "/fitness-programme-manager/",
   "display": "standalone",
   "background_color": "#f4f7fa",
   "theme_color": "#1769aa",
@@ -27,5 +27,6 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "prefer_related_applications": false
 }
