@@ -1,5 +1,5 @@
 {
-  "version": "44",
+  "version": "45",
   "release": "2026-11-09",
-  "features": "optional food and hydration diary, per-client feature settings, consent-based diary export and import"
+  "features": "Client journey, smart builder, equipment manager, training comparisons, printable coaching review, safety snapshots, companion home, new minimalist icon"
 }
