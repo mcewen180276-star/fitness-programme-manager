@@ -1,5 +1,5 @@
 {
-  "version": "42",
+  "version": "44",
   "release": "2026-11-09",
-  "features": "separate per-client programme workspaces, standalone templates, explicit assignment, programme history"
+  "features": "optional food and hydration diary, per-client feature settings, consent-based diary export and import"
 }
