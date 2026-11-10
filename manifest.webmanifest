@@ -6,8 +6,8 @@
   "start_url": "/fitness-programme-manager/",
   "scope": "/fitness-programme-manager/",
   "display": "standalone",
-  "background_color": "#f4f7fa",
-  "theme_color": "#1769aa",
+  "background_color": "#f2f6fd",
+  "theme_color": "#154c85",
   "icons": [
     {
       "src": "icons/icon-192.png",

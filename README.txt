@@ -1,1 +1,1 @@
-v34: fixes section dropdown resetting before Add heading is clicked. Upload entire ZIP contents to GitHub Pages root; backup records before updating.
+v41: Online equipment selector now includes every one of the 22 built-in equipment groups. Search maps each group to matching provider equipment names or specific exercise names. Some specialised categories may have few/no matches because the free external exercise catalogue does not cover them. All v40 features retained. Back up before uploading updated files to GitHub Pages.
