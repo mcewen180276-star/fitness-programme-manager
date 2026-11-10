@@ -1,5 +1,5 @@
 {
-  "version": "45",
+  "version": "46",
   "release": "2026-11-09",
-  "features": "Client journey, smart builder, equipment manager, training comparisons, printable coaching review, safety snapshots, companion home, new minimalist icon"
+  "features": "Direct share Client Companion HTML via native share sheet; download fallback; v45 retained"
 }
