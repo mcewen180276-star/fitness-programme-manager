@@ -1,5 +1,5 @@
 {
-  "version": "60",
+  "version": "61",
   "release": "2026-11-09",
-  "features": "All client programmes including archives; guided workout integrated with workout recording; corrected character encoding"
+  "features": "Explicit named dated client programme releases; private autosave archive; selectable export only"
 }
