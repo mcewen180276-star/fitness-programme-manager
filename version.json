@@ -1,5 +1,5 @@
 {
-  "version": "58",
+  "version": "59",
   "release": "2026-11-09",
-  "features": "Client Companion includes all saved client programmes, selectable programme and workout days"
+  "features": "Fix duplicate workout ID, programme selection, guided workout and record workout; optional rest timer"
 }
