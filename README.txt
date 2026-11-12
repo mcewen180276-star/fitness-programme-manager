@@ -1,7 +1,14 @@
-Fitness Programme Manager v52 — State is not defined repair
+FITNESS PROGRAMME MANAGER v53 — CLIENT PROGRAMME LIBRARY
 
-The main app accidentally closed its JavaScript module before loading features added after v44. Client Companion, food diary, saved programme links and other features could report "state is not defined". v52 places the code back into the original shared scope.
+FIXES
+- Removes accidentally injected app code from the service worker, where `state` is undefined. This was one source of the reported error.
+- Retains the standalone Client Companion export, direct share, and preview.
+- Adds multiple named programmes per client, with Open/Make active, Rename and Duplicate. Existing current client programme is migrated into the named library when first opened.
+- Sample client includes a named three-day sample programme.
+- Client Companion exports the active saved programme for the selected client.
+- Saves named programme edits through the existing autosave/IndexedDB mechanism.
 
-All v51 features and the approved app icon are retained. The existing storage key and programme data structure are unchanged. Back up your data before replacing files on GitHub Pages. Do not clear app/browser storage or uninstall the app.
+IMPORTANT
+Back up existing data BEFORE uploading this version. Do not clear browser storage, uninstall the PWA or create a new repository URL. Update all files in the SAME GitHub Pages repository. If an existing programme was never successfully saved, this version cannot recover it. Browser testing on Android and Messenger is still needed.
 
-Testing: choose a client, open Edit & Print, then Client Companion > Preview > Share. If Android has a cached old version, close and reopen after the GitHub Pages deployment.
+A client can have multiple saved named programmes. Only the currently active programme is included in a Client Companion export. To send another one, select Open / make active first.

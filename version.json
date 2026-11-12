@@ -1,5 +1,5 @@
 {
-  "version": "52",
+  "version": "53",
   "release": "2026-11-09",
-  "features": "Fix state not defined in Client Companion and other tabs by restoring common module scope"
+  "features": "Client Companion scope fix, sample client named programme, multi-programme per client library and history"
 }
