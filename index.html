@@ -145,11 +145,11 @@ nav button{border-radius:11px!important}
 @media print{body:not(.print-training):not(.print-dashboard):not(.print-challenge):not(.print-client-review):not(.print-report) #printPlan{break-before:auto!important;page-break-before:auto!important}#printPlan .programme-document-heading{margin-bottom:7px!important;padding-bottom:4px!important}#printPlan #printHeader h2{margin:4px 0!important}#printPlan #printHeader p{margin:3px 0!important}#printPlan .print-client-overview{break-inside:avoid;page-break-inside:avoid;padding:8px!important;margin:6px 0 10px!important;font-size:11px}#printPlan .print-client-overview p{margin:3px 0}#printPlan #sessions{break-before:auto!important;page-break-before:auto!important}#printPlan #sessions>.session:first-child{break-before:auto!important;page-break-before:auto!important}#printPlan .programme-document-heading h1{font-size:20px!important}}
 </style><meta name="application-name" content="Fitness Manager"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<header><div class="app-version">FITNESS STUDIO · VERSION 49</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
+<header><div class="app-version">FITNESS STUDIO · VERSION 51</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
 <main>
 <nav class="no-print">
 <button class="active" data-screen="dashboard">Overview</button><button data-screen="clients">Clients</button><button data-screen="library">Exercise library</button><button data-screen="builder">Programme creator</button><button data-screen="programme">Edit & print</button><button data-screen="weekly">Weekly planner</button><button data-screen="workoutMode">Workout mode</button><button data-screen="training">Training record</button><button data-screen="progress">Assessment & progress</button><button data-screen="templates">My templates</button><button data-screen="calculators">Fitness calculators</button><button data-screen="dashboardProgress">Progress dashboard</button><button data-screen="clientReport">Client review report</button><button data-screen="branding">Business branding</button><button data-screen="challenges">Challenges</button><button data-screen="calendar">Calendar</button><button data-screen="companion">Client mini app</button><button data-screen="privacy">Backup & privacy</button>
-<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v49 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
+<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v51 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
 
 <section id="foodDiary" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Food & hydration diary</h2><p class="muted">Optional, descriptive wellbeing diary. No calorie counts, body targets, food scoring or automatic nutrition judgements. Diary records are private unless a client chooses to export and share them.</p>
@@ -218,7 +218,7 @@ nav button{border-radius:11px!important}
 <input id="existingExercisePhoto" type="file" accept="image/png,image/jpeg,image/webp" hidden><dialog id="photoDialog" class="photo-dialog"><div class="row"><h3 style="flex:1" id="photoDialogTitle">Choose a licensed exercise photograph</h3><button class="btn" id="closePhotoDialog" type="button">Close</button></div><p class="muted">Results come from Wikimedia Commons and may not depict the correct exercise. Review the picture and licence before saving. Internet required.</p><div id="photoStatus" aria-live="polite"></div><div id="photoOptions" class="photo-options"></div></dialog>
 </section>
 <section id="builder" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div><div class="card no-print" id="aiSetup"><h3>Connected AI programme generator</h3><p class="muted">Use a separately hosted, secure AI service to generate personalised programme drafts. An API key must stay on the server, never in this HTML file. No client information is sent until you press an AI button and confirm. The offline generator remains available.</p><label>Secure AI server URL (HTTPS)</label><input id="aiServerUrl" type="url" placeholder="https://your-ai-server.example.com"><div class="row"><button class="btn" id="aiSaveServer">Save server address on this device</button><button class="btn" id="aiTestServer">Test connection</button></div><p id="aiConnectionStatus" class="muted" aria-live="polite"></p><p class="muted">Client data sent for generation: age, goals, training experience, availability, equipment, relevant readiness answers and coaching notes. Names, contact details and client reference are excluded. Obtain client consent and check your data protection obligations before sending any information.</p></div>
-<div class="card"><h2>Programme creator</h2><div class="notice">To make a template: select <b>Create manual programme</b> below, add your exercises in <b>Edit & print</b>, then tap <b>Save as template</b>. No client required.</div><div class="row" style="margin:10px 0"><button type="button" class="btn primary" id="builderSaveDraft">Save programme draft</button><button type="button" class="btn" id="builderOpenSaved">Open saved programme</button><span id="builderSaveStatus" class="muted" role="status">Autosave enabled</span></div><div id="builderClient" class="notice">Choose a client to generate a personalised programme, or create a standalone template without a client.</div>
+<div class="card" id="v51SavedProgrammesPanel"><h3>Saved programmes for selected client</h3><p class="muted">Choose a client in Clients first. Your saved programme and earlier versions will appear here. Opening a version never deletes the current programme.</p><div id="v51SavedProgrammes"></div><div class="row"><button type="button" class="btn primary" id="v51OpenCurrent">Open client's saved programme</button><button type="button" class="btn" id="v51OpenProgrammeEditor">Go to programme editor</button></div></div><div class="card"><h2>Programme creator</h2><div class="notice">To make a template: select <b>Create manual programme</b> below, add your exercises in <b>Edit & print</b>, then tap <b>Save as template</b>. No client required.</div><div class="row" style="margin:10px 0"><button type="button" class="btn primary" id="builderSaveDraft">Save programme draft</button><button type="button" class="btn" id="builderOpenSaved">Open saved programme</button><span id="builderSaveStatus" class="muted" role="status">Autosave enabled</span></div><div id="builderClient" class="notice">Choose a client to generate a personalised programme, or create a standalone template without a client.</div>
 <div class="grid" style="margin-top:12px"><div><label>Programme emphasis</label><select id="emphasis"><option>Balanced fitness</option><option>Cardiovascular fitness</option><option>Strength</option><option>Muscular endurance / circuits</option><option>Mobility and flexibility</option><option>Functional fitness</option><option>Hypertrophy</option><option>Power and athletic development</option><option>HIIT / intervals</option><option>Low-impact conditioning</option><option>Mixed strength and cardio</option><option>Bodyweight / calisthenics</option></select></div><div><label>Session format</label><select id="format"><option>Full body</option><option>Cardio and resistance mix</option><option>Upper / lower split</option><option>Circuit training</option><option>Push / pull / legs</option><option>Strength + conditioning</option><option>Cardio intervals</option><option>Individual muscle-group split</option></select></div></div>
 <div class="field" style="margin-top:10px"><label><input id="includeCardio" type="checkbox" style="width:auto;margin-right:8px" checked>Include cardio within resistance-training days</label><div class="grid"><div><label>Cardio placement</label><select id="cardioPlacement"><option value="end">After resistance work</option><option value="start">Before resistance work</option></select></div><div><label>Cardio duration</label><select id="cardioMinutes"><option value="10">10 minutes</option><option value="15" selected>15 minutes</option><option value="20">20 minutes</option><option value="30">30 minutes</option></select></div></div><p class="muted">Choose the cardio component separately from the main resistance-training style. Adjust to the client’s goals and recovery.</p></div><div class="field" style="margin-top:10px"><label>Trainer programme notes</label><textarea id="trainerNotes"></textarea></div><div class="row" style="margin-top:12px"><button class="btn primary" id="aiGenerateMain">Generate with AI</button><button class="btn" id="generatePlan">Generate offline draft</button><button class="btn" id="createManual">Create blank programme manually</button></div><p class="muted">The generator uses experience, equipment, recovery and selected style; it does not replace an individual coaching assessment. The generated plan is a draft. A qualified professional must review screening, exercise selection, technique, intensity, progression and recovery before use.</p></div>
 <div class="card"><h3>Progression framework</h3><p>Weekly progression is presented as a review guide, not an automatic instruction to increase workload. Progress only when technique, recovery and client response are appropriate.</p><div id="progressionPreview"></div></div>
@@ -785,7 +785,7 @@ $('assignProgrammeClient').onclick=()=>{
  if(existing?.sessions?.length){state.programmeHistory.unshift({id:id(),date:new Date().toISOString(),owner,reason:'Before assigning new programme',signature:'assignment-'+Date.now(),sessions:structuredClone(existing.sessions),notes:existing.notes||''});state.programmeHistory=state.programmeHistory.slice(0,35)}
  state.clientProgrammes[owner]={sessions:structuredClone(state.sessions),notes:state.notes||''};
  if(state.planClient===owner){lastSavedProgramme=JSON.stringify({owner,sessions:state.sessions,notes:state.notes})}
- try{localStorage.setItem(key,JSON.stringify(state))}catch(e){alert('Could not save. Export a backup.');return}alert('A copy has been assigned. The original workspace is unchanged.');
+ persist().then(ok=>{if(ok)alert('A copy has been assigned and saved for this client.');else alert('Assignment could not be saved. Do not close the app; export a backup.');});
 };
 function renderProgrammeTargets(){const el=$('assignProgrammeTarget');if(!el)return;const old=el.value;el.innerHTML='<option value="">Choose a client...</option>'+state.clients.map(c=>`<option value="${esc(c.id)}">${esc((c.firstName+' '+c.lastName).trim()||c.clientRef||'Client')}</option>`).join('');el.value=old}
 let v49LastSave=Promise.resolve(false),v49SaveWarning=false;
@@ -833,7 +833,7 @@ function fillForm(c){clientFields.forEach(k=>$(k).value=c?.[k]??'');questions.fo
 function renderReviews(){let c=activeClient(),list=(state.reviews||[]).filter(r=>r.clientId===c?.id);$('reviewHistory').innerHTML=(c?`<div class="report-title"><h2>Client assessment report</h2><p><b>${esc((c.firstName+' '+c.lastName).trim())}</b> · Ref: ${esc(c.clientRef||'—')} · Goal: ${esc(c.goal||'—')}</p><p>Experience: ${esc(c.experience||'—')} · Activity: ${esc(c.activity||'—')} · Programme: ${esc(c.duration||'—')}</p></div>`:'')+(list.length?list.slice().reverse().map(r=>`<div class="review-entry"><b>${esc(r.point)} · ${esc(r.date||'Date not set')}</b><p>Attendance: ${esc(r.attendance||'—')} · Effort: ${esc(r.effort||'—')}/10 · Recovery: ${esc(r.recovery||'—')}/5 · Goal progress: ${esc(r.goal||'—')}/5</p><p>${esc(r.measures||'')}</p><p>${esc(r.feedback||'')}</p><p><b>Decision:</b> ${esc(r.decision)}</p><p>${esc(r.notes||'')}</p></div>`).join(''):'<p class="muted">No reviews saved for this client yet.</p>')}
 function saveReview(){let c=activeClient();if(!c){alert('Select a client first.');return}let r={id:id(),clientId:c.id,date:$('reviewWhen').value,point:$('reviewPoint').value,restingHR:$('reviewRestingHR').value,attendance:$('reviewAttendance').value,effort:$('reviewEffort').value,recovery:$('reviewRecovery').value,goal:$('reviewGoal').value,measures:$('reviewMeasures').value,feedback:$('reviewFeedback').value,notes:$('reviewNotes').value,decision:$('reviewDecision').value};state.reviews=state.reviews||[];state.reviews.push(r);persist();renderReviews();alert('Review saved to this browser.')}
 function refreshClients(){let sel=$('clientSelect');sel.innerHTML='<option value="">Choose a client</option>'+state.clients.map(c=>`<option value="${esc(c.id)}">${esc((c.firstName+' '+c.lastName).trim()||c.clientRef||'Unnamed client')}</option>`).join('');sel.value=state.selected}
-$('clientSelect').onchange=()=>{const target=$('clientSelect').value;openProgrammeWorkspace(target);state.selected=target;fillForm(activeClient());persist();updateBuilder();renderReviews()};
+$('clientSelect').onchange=()=>{const target=$('clientSelect').value;state.selected=target;openProgrammeWorkspace(target);fillForm(activeClient());persist();updateBuilder();renderReviews();v51RenderSaved()};
 $('newClient').onclick=()=>{state.selected=id();fillForm({experience:'Beginner',activity:'Sedentary',sleep:'7–8 hours',stress:'Moderate',sessionLength:'45 minutes',goal:'General health and fitness',duration:'6 weeks',frequency:'3',location:'Gym',equipment:'Full gym'});refreshClients();$('saveMessage').textContent='New profile: complete details and save.'};
 $('saveClient').onclick=()=>{let c=readForm();if(!c.firstName.trim()&&!c.clientRef.trim()){alert('Enter a client display name or reference.');return}if(!state.selected)state.selected=id();c.id=state.selected;let i=state.clients.findIndex(x=>x.id===c.id);if(i<0)state.clients.push(c);else state.clients[i]=c;persist().then(ok=>{$('saveMessage').textContent=ok?'Client saved on this device.':'Client NOT saved — export backup.'});refreshClients();updateBuilder()};
 $('deleteClient').onclick=()=>{if(!state.selected)return;if(!confirm('Delete this client profile?'))return;state.clients=state.clients.filter(c=>c.id!==state.selected);state.reviews=(state.reviews||[]).filter(r=>r.clientId!==state.selected);state.trainingRecords=(state.trainingRecords||[]).filter(r=>r.clientId!==state.selected);state.challenges=(state.challenges||[]).filter(r=>r.clientId!==state.selected);if(state.planClient===state.selected){archiveProgramme('Before client deletion');state.sessions=[];state.planClient=''}delete state.clientProgrammes[state.selected];state.selected='';fillForm({});persist();refreshClients();renderProgramme();updateBuilder()};
@@ -1547,7 +1547,8 @@ function companionToken(c){return 'client-'+c.id}
 
 function safeClientMiniPackage(){
  const c=activeClient();if(!c)throw Error('Select a client first.');
- const allSessions=state.planClient===c.id?state.sessions:[];
+ const saved=state.clientProgrammes?.[c.id];
+ const allSessions=(saved?.sessions?.length?saved.sessions:(state.planClient===c.id?state.sessions:[]));
  const allChallenges=(state.challenges||[]).filter(x=>x.clientId===c.id);
  if(!allSessions.length&&!allChallenges.length)throw Error('This client has no programme or challenges yet.');
  const includeNotes=$('companionIncludeNotes').checked;
@@ -2135,6 +2136,41 @@ $('coachReportComments').oninput=v45NotesPrint;$('coachReportNext').oninput=v45N
 $('coachReportSave').onclick=()=>{const owner=$('coachReportClient').value;if(!owner){alert('Choose a client');return}state.v45CoachNotes[owner]={comments:$('coachReportComments').value,next:$('coachReportNext').value,date:new Date().toISOString()};persist();v45NotesPrint();alert('Review comments saved for this client.')};
 $('coachReportPrint').onclick=()=>{if(!$('coachReportClient').value)return;document.body.classList.add('v45-print-review');window.print();setTimeout(()=>document.body.classList.remove('v45-print-review'),1200)};
 
+// v51: explicit per-client programme discovery and recovery. Do not alter other clients.
+function v51ClientProgrammes(owner){
+ if(!owner)return [];
+ const result=[];
+ const saved=state.clientProgrammes?.[owner];
+ if(saved?.sessions?.length)result.push({kind:'saved',label:'Current saved programme',sessions:saved.sessions,notes:saved.notes||''});
+ if(state.planClient===owner&&state.sessions.length&&!result.length)result.push({kind:'active',label:'Current editor programme',sessions:state.sessions,notes:state.notes||''});
+ (state.programmeHistory||[]).forEach((h,i)=>{if(h.owner===owner&&h.sessions?.length)result.push({kind:'history',index:i,label:'Earlier version — '+new Date(h.date).toLocaleString()+' ('+h.sessions.length+' days)',sessions:h.sessions,notes:h.notes||''})});
+ (state.multiweekCycles||[]).forEach((c,i)=>{if(c.owner===owner&&c.weeks?.length)result.push({kind:'cycle',index:i,label:'Multiweek programme — '+(c.title||'Untitled'),sessions:c.weeks[0]?.sessions||[],notes:c.weeks[0]?.notes||''})});
+ return result;
+}
+function v51RenderSaved(){
+ const el=$('v51SavedProgrammes');if(!el)return;
+ const c=activeClient();if(!c){el.innerHTML='<p>Select a saved client under Clients to see their programmes.</p>';return}
+ const programmes=v51ClientProgrammes(c.id);
+ el.innerHTML='<p><b>'+esc((c.firstName+' '+c.lastName).trim())+'</b> · '+programmes.length+' saved/current programme entries</p>'+
+ (programmes.length?programmes.map((p,i)=>'<div class="v43-entry"><b>'+esc(p.label)+'</b><p>'+p.sessions.length+' days · '+p.sessions.reduce((n,d)=>n+(d.items||[]).length,0)+' exercises</p><button type="button" class="btn" data-v51-open="'+i+'">Open in editor</button></div>').join(''):'<p class="muted">No saved programme found for this client. Generate a new one or assign a programme from Templates.</p>');
+}
+function v51OpenProgramme(item){
+ const c=activeClient();if(!c||!item)return;
+ if(item.kind==='saved'||item.kind==='active'){openProgrammeWorkspace(c.id);switchScreen('programme');return}
+ if(!confirm('Open this earlier programme as the current programme for '+c.firstName+'? The current programme will be saved to history first.'))return;
+ saveProgrammeWorkspace();
+ const existing=state.clientProgrammes?.[c.id];
+ if(existing?.sessions?.length){state.programmeHistory.unshift({id:id(),date:new Date().toISOString(),owner:c.id,reason:'Before opening earlier saved programme',signature:'v51-'+Date.now(),sessions:structuredClone(existing.sessions),notes:existing.notes||''});state.programmeHistory=state.programmeHistory.slice(0,35)}
+ state.clientProgrammes[c.id]={sessions:structuredClone(item.sessions),notes:item.notes||''};
+ openProgrammeWorkspace(c.id);persist();switchScreen('programme');
+}
+$('v51SavedProgrammes').addEventListener('click',e=>{const b=e.target.closest('[data-v51-open]');if(!b)return;const items=v51ClientProgrammes(state.selected);v51OpenProgramme(items[Number(b.dataset.v51Open)])});
+$('v51OpenCurrent').onclick=()=>{const c=activeClient();if(!c)return alert('Select a client first.');const list=v51ClientProgrammes(c.id);if(!list.length)return alert('This client has no saved programme yet.');v51OpenProgramme(list.find(x=>x.kind==='saved'||x.kind==='active')||list[0])};
+$('v51OpenProgrammeEditor').onclick=()=>switchScreen('programme');
+// Keep programme creator and Client Companion in sync when switching screens.
+const v51OldSwitchScreen=switchScreen;
+switchScreen=function(name){v51OldSwitchScreen(name);if(name==='builder')v51RenderSaved();if(name==='companion'){const c=activeClient();const found=c?v51ClientProgrammes(c.id):[];const msg=$('companionStatus');if(msg)msg.textContent=c?(found.length?'Selected: '+c.firstName+' · '+found.length+' saved/current programme entries available for sharing.':'Selected: '+c.firstName+' · no saved programme yet.'):'Select a client in Clients before sharing.';}};
+
 </script>
 <script>if ('serviceWorker' in navigator && location.protocol !== 'file:') {window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker registration failed',err)));}
 // v44: opt-in food diary settings and separate client-approved diary import.
@@ -2203,21 +2239,69 @@ v47FillGoals(activeClient());
 window.v48AutosaveReady=true;
 
 // v48: safe, explicitly fictional demonstration data. Does not modify existing clients.
+// v50: sample creation isolated from programme builder and the main app navigation.
 $('createDemoClient').onclick=async()=>{
- if(!confirm('Create a fictional SAMPLE client and a three-day example programme? Your existing clients will not be changed.'))return;
- // Save the current workspace before switching to the demo profile.
- v47SavePending();saveProgrammeWorkspace();
- const owner=id(),today=new Date().toISOString().slice(0,10);
- const c={id:owner,firstName:'Sample',lastName:'Client (DEMO)',clientRef:'DEMO-'+owner.slice(-6),age:'35',occupation:'Office worker',experience:'Beginner',activity:'Lightly active',sleep:'7–8 hours',stress:'Moderate',sessionLength:'45 minutes',healthNotes:'FICTIONAL TEST PROFILE ONLY — not medical screening',followup:'Demonstration only',goal:'General health and fitness',goals:['General health and fitness','Strength','Mobility and flexibility'],duration:'6 weeks',frequency:'3',location:'Gym',equipment:'Full gym',reviewDate:'',target:'Practise consistent training and improve general fitness',preferences:'Enjoys cycling and simple resistance exercises',limitations:'No limitations entered — sample data only',currentSessions:'0',recovery:'Usually good',energy:'Moderate',workload:'Moderate',intensity:'Moderate',environment:'Gym',consistency:'Building a routine',nutrition:'Sample information only',trainingHistoryNotes:'No previous structured training (fictional)',lifestyleNotes:'Fictional demonstration profile',screening:questions.map(()=> 'No')};
- const groups=[['Day 1 — Full body',['Bodyweight squat','Seated cable row','Glute bridge','Brisk walking']],['Day 2 — Cardio and mobility',['Stationary cycling','Bird dog','Cat-cow mobility','Hamstring stretch']],['Day 3 — Full body',['Leg press','Dumbbell chest press','Lat pulldown','Front plank']]];
- const sessions=groups.map(([name,names])=>({id:id(),name,focus:'General fitness · SAMPLE',items:names.map(n=>{const ex=state.exercises.find(x=>x.name.toLowerCase()===n.toLowerCase())||{name:n,category:'Resistance',instructions:'Review technique and adapt to the individual.'};return planItem(ex,'Balanced fitness')})}));
- state.clients.push(c);state.clientProgrammes=state.clientProgrammes||{};state.clientProgrammes[owner]={sessions:structuredClone(sessions),notes:'DEMONSTRATION ONLY. This programme is fictional, not personalised advice.'};
- state.selected=owner;state.planClient=owner;state.sessions=structuredClone(sessions);state.notes='DEMONSTRATION ONLY. This programme is fictional, not personalised advice.';
- state.v47BuilderDrafts=state.v47BuilderDrafts||{};state.v47BuilderDrafts[owner]={emphasis:'Balanced fitness',format:'Full body',includeCardio:true,cardioPlacement:'end',cardioMinutes:'10',trainerNotes:'Demo programme — sample client'};
- const stored=await persist();refreshClients();fillForm(c);updateBuilder();renderProgramme();
- $('saveMessage').textContent=stored?'Fictional demo client and 3-day programme created and saved.':'Demo client created but NOT saved. Export backup before closing.';
- if(stored)alert('Sample client and example programme created and saved. You can edit them to test features.');
- switchScreen('programme');
+ const status=$('saveMessage');
+ if(!confirm('Create a fictional client and 3-day programme? Existing clients will be kept.'))return;
+ const button=$('createDemoClient');button.disabled=true;
+ status.textContent='Creating sample client…';
+ try{
+  const owner=id();
+  const demo={
+   id:owner,firstName:'Sample',lastName:'Client (DEMO)',clientRef:'DEMO-'+owner.slice(-6),
+   age:'35',occupation:'Office worker',experience:'Beginner',activity:'Lightly active',
+   sleep:'7–8 hours',stress:'Moderate',sessionLength:'45 minutes',
+   goal:'General health and fitness',goals:['General health and fitness','Strength','Mobility and flexibility'],
+   duration:'6 weeks',frequency:'3',location:'Gym',equipment:'Bodyweight, Dumbbells, Cardio machines',
+   target:'Build consistency, strength and mobility',preferences:'Cycling, walking, simple strength exercises',
+   limitations:'Demo only — no real screening completed',healthNotes:'FICTIONAL CLIENT — NOT MEDICAL INFORMATION',
+   followup:'Test programme only',reviewDate:'',currentSessions:'0',recovery:'Good',energy:'Moderate',
+   workload:'Moderate',intensity:'Moderate',environment:'Gym',consistency:'New routine',
+   nutrition:'Fictional example',trainingHistoryNotes:'New to structured training',lifestyleNotes:'Sample data only',
+   screening:questions.map(()=> 'No')
+  };
+  const days=[
+   ['Day 1 — Full body',['Bodyweight squat','Glute bridge','Seated cable row','Brisk walking']],
+   ['Day 2 — Cardio and mobility',['Stationary cycling','Bird dog','Cat-cow mobility','Hamstring stretch']],
+   ['Day 3 — Full body',['Leg press','Dumbbell chest press','Lat pulldown','Front plank']]
+  ];
+  const sessions=days.map(([name,names])=>({
+   id:id(),name,focus:'SAMPLE · General fitness',
+   items:names.map(n=>{
+    const ex=state.exercises.find(x=>String(x.name||'').toLowerCase()===n.toLowerCase())||{name:n,category:'Resistance',instructions:'Sample exercise. Review technique before use.'};
+    return {id:id(),name:ex.name,sets:'2',reps:ex.category==='Cardio'?'10 minutes':'8–12',rest:'60 seconds',notes:ex.instructions||'',category:ex.category||'Resistance',suggestedWeight:'',weightUsed:'',demo:ex.demo||''};
+   })
+  }));
+  // Save the previous workspace before switching clients.
+  saveProgrammeWorkspace();
+  state.clients.push(demo);
+  state.clientProgrammes=state.clientProgrammes||{};
+  state.clientProgrammes[owner]={sessions:structuredClone(sessions),notes:'FICTIONAL DEMO PROGRAMME — for testing only.'};
+  state.selected=owner;
+  state.planClient=owner;
+  state.sessions=structuredClone(sessions);
+  state.notes='FICTIONAL DEMO PROGRAMME — for testing only.';
+  // Persist BEFORE refreshing any views, so a broken view cannot block saving.
+  const saved=await persist();
+  if(!saved){
+   status.textContent='Sample created in memory but could not be saved. Do not close the app; export a backup.';
+   alert('Storage did not confirm a successful save. Please check available device space and back up your data.');
+   return;
+  }
+  status.textContent='Sample client and 3-day programme saved. Opening the programme…';
+  try{refreshClients();fillForm(demo);renderProgramme();switchScreen('programme')}
+  catch(viewError){
+   console.error('Sample created but view failed',viewError);
+   status.textContent='Sample client saved, but opening the programme failed: '+viewError.message;
+   alert('The sample client was saved, but a screen error occurred. Please tell me: '+viewError.message);
+   return;
+  }
+  alert('Sample client and three-day programme saved. You can now try editing and printing.');
+ }catch(err){
+  console.error('Sample client generation failed',err);
+  status.textContent='Sample client error: '+(err?.message||String(err));
+  alert('Sample client could not be created: '+(err?.message||String(err)));
+ }finally{button.disabled=false}
 };
 
 </script>

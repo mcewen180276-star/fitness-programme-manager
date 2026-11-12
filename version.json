@@ -1,5 +1,5 @@
 {
-  "version": "49",
+  "version": "51",
   "release": "2026-11-09",
-  "features": "IndexedDB large-storage autosave; demo client reliable save; navigation fixes; all v48 features"
+  "features": "Saved client programmes in creator, correct Client Companion export, reliable IndexedDB assignment"
 }
