@@ -1,5 +1,5 @@
 {
-  "version": "53",
+  "version": "54",
   "release": "2026-11-09",
-  "features": "Client Companion scope fix, sample client named programme, multi-programme per client library and history"
+  "features": "Mini app client and programme selection; food settings undefined fix; collapsible and reorderable days; sample client generator removed"
 }
