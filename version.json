@@ -1,5 +1,5 @@
 {
-  "version": "59",
+  "version": "60",
   "release": "2026-11-09",
-  "features": "Fix duplicate workout ID, programme selection, guided workout and record workout; optional rest timer"
+  "features": "All client programmes including archives; guided workout integrated with workout recording; corrected character encoding"
 }
