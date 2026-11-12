@@ -1,5 +1,5 @@
 {
-  "version": "46",
+  "version": "47",
   "release": "2026-11-09",
-  "features": "Direct share Client Companion HTML via native share sheet; download fallback; v45 retained"
+  "features": "Save programme, autosave builder and edits, multiple client goals, client print overview, all v46 features"
 }
