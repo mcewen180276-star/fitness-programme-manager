@@ -145,11 +145,11 @@ nav button{border-radius:11px!important}
 @media print{body:not(.print-training):not(.print-dashboard):not(.print-challenge):not(.print-client-review):not(.print-report) #printPlan{break-before:auto!important;page-break-before:auto!important}#printPlan .programme-document-heading{margin-bottom:7px!important;padding-bottom:4px!important}#printPlan #printHeader h2{margin:4px 0!important}#printPlan #printHeader p{margin:3px 0!important}#printPlan .print-client-overview{break-inside:avoid;page-break-inside:avoid;padding:8px!important;margin:6px 0 10px!important;font-size:11px}#printPlan .print-client-overview p{margin:3px 0}#printPlan #sessions{break-before:auto!important;page-break-before:auto!important}#printPlan #sessions>.session:first-child{break-before:auto!important;page-break-before:auto!important}#printPlan .programme-document-heading h1{font-size:20px!important}}
 </style><meta name="application-name" content="Fitness Manager"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<header><div class="app-version">FITNESS STUDIO · VERSION 48</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
+<header><div class="app-version">FITNESS STUDIO · VERSION 49</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
 <main>
 <nav class="no-print">
 <button class="active" data-screen="dashboard">Overview</button><button data-screen="clients">Clients</button><button data-screen="library">Exercise library</button><button data-screen="builder">Programme creator</button><button data-screen="programme">Edit & print</button><button data-screen="weekly">Weekly planner</button><button data-screen="workoutMode">Workout mode</button><button data-screen="training">Training record</button><button data-screen="progress">Assessment & progress</button><button data-screen="templates">My templates</button><button data-screen="calculators">Fitness calculators</button><button data-screen="dashboardProgress">Progress dashboard</button><button data-screen="clientReport">Client review report</button><button data-screen="branding">Business branding</button><button data-screen="challenges">Challenges</button><button data-screen="calendar">Calendar</button><button data-screen="companion">Client mini app</button><button data-screen="privacy">Backup & privacy</button>
-<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v48 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
+<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v49 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
 
 <section id="foodDiary" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Food & hydration diary</h2><p class="muted">Optional, descriptive wellbeing diary. No calorie counts, body targets, food scoring or automatic nutrition judgements. Diary records are private unless a client chooses to export and share them.</p>
@@ -788,7 +788,29 @@ $('assignProgrammeClient').onclick=()=>{
  try{localStorage.setItem(key,JSON.stringify(state))}catch(e){alert('Could not save. Export a backup.');return}alert('A copy has been assigned. The original workspace is unchanged.');
 };
 function renderProgrammeTargets(){const el=$('assignProgrammeTarget');if(!el)return;const old=el.value;el.innerHTML='<option value="">Choose a client...</option>'+state.clients.map(c=>`<option value="${esc(c.id)}">${esc((c.firstName+' '+c.lastName).trim()||c.clientRef||'Client')}</option>`).join('');el.value=old}
-function persist(){saveProgrammeWorkspace();try{localStorage.setItem(key,JSON.stringify(state));v47Status('Saved automatically')}catch(e){alert('Browser storage is full or unavailable. Export a backup and avoid storing sensitive information.')}updateStats()}
+let v49LastSave=Promise.resolve(false),v49SaveWarning=false;
+function v49Db(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return reject(Error('IndexedDB unavailable'));const r=indexedDB.open('FitnessManagerStorage',1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('records'))r.result.createObjectStore('records')};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error||Error('Database unavailable'))})}
+async function v49DbSave(data){const db=await v49Db();try{await new Promise((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').put({date:Date.now(),data},'main');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||Error('Database write failed'));tx.onabort=()=>reject(tx.error||Error('Database write cancelled'))});return true}finally{db.close()}}
+async function v49DbLoad(){const db=await v49Db();try{return await new Promise((resolve,reject)=>{const tx=db.transaction('records','readonly'),r=tx.objectStore('records').get('main');r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error)})}finally{db.close()}}
+let v49Sequence=Promise.resolve();
+function persist(){
+ saveProgrammeWorkspace();
+ v49InitialLoadFinished=true;const snapshot=structuredClone(state);
+ // Serialize writes so an older autosave cannot overwrite a newer one.
+ const task=v49Sequence.catch(()=>{}).then(()=>v49DbSave(snapshot));v49Sequence=task;
+ v49LastSave=task.then(()=>{v47Status('Saved to device');v49SaveWarning=false;return true}).catch(err=>{if(!v49SaveWarning){v49SaveWarning=true;alert('Could not save to device storage. Do not close this page. Export an encrypted backup. '+err.message)}v47Status('SAVE FAILED — export backup');return false});
+ // Keep the original localStorage copy when possible, but never delete it on quota failure.
+ try{localStorage.setItem(key,JSON.stringify(snapshot))}catch(e){/* Large databases are safely stored in IndexedDB instead. */}
+ updateStats();return v49LastSave;
+}
+// Recover from IndexedDB on future launches, including when the old localStorage quota was reached.
+let v49InitialLoadFinished=false;
+v49DbLoad().then(saved=>{
+ if(saved?.data?.clients&&Array.isArray(saved.data.exercises)){
+  // Do not replace live changes made while the database was opening.
+  if(!v49InitialLoadFinished){state={...state,...saved.data};state.clientProgrammes=state.clientProgrammes||{};state.programmeHistory=state.programmeHistory||[];state.standaloneProgramme=state.standaloneProgramme||{sessions:[],notes:''};lastSavedProgramme=JSON.stringify({owner:state.planClient||'standalone',sessions:state.sessions,notes:state.notes});refreshClients();fillForm(activeClient());renderProgramme();renderLibrary();updateBuilder();updateStats();}
+ }
+}).catch(()=>{}).finally(()=>{v49InitialLoadFinished=true});
 function id(){return 'c'+Date.now()+Math.random().toString(16).slice(2,6)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function activeClient(){return state.clients.find(c=>c.id===state.selected)}
@@ -813,7 +835,7 @@ function saveReview(){let c=activeClient();if(!c){alert('Select a client first.'
 function refreshClients(){let sel=$('clientSelect');sel.innerHTML='<option value="">Choose a client</option>'+state.clients.map(c=>`<option value="${esc(c.id)}">${esc((c.firstName+' '+c.lastName).trim()||c.clientRef||'Unnamed client')}</option>`).join('');sel.value=state.selected}
 $('clientSelect').onchange=()=>{const target=$('clientSelect').value;openProgrammeWorkspace(target);state.selected=target;fillForm(activeClient());persist();updateBuilder();renderReviews()};
 $('newClient').onclick=()=>{state.selected=id();fillForm({experience:'Beginner',activity:'Sedentary',sleep:'7–8 hours',stress:'Moderate',sessionLength:'45 minutes',goal:'General health and fitness',duration:'6 weeks',frequency:'3',location:'Gym',equipment:'Full gym'});refreshClients();$('saveMessage').textContent='New profile: complete details and save.'};
-$('saveClient').onclick=()=>{let c=readForm();if(!c.firstName.trim()&&!c.clientRef.trim()){alert('Enter a client display name or reference.');return}if(!state.selected)state.selected=id();c.id=state.selected;let i=state.clients.findIndex(x=>x.id===c.id);if(i<0)state.clients.push(c);else state.clients[i]=c;persist();refreshClients();$('saveMessage').textContent='Client saved on this device.';updateBuilder()};
+$('saveClient').onclick=()=>{let c=readForm();if(!c.firstName.trim()&&!c.clientRef.trim()){alert('Enter a client display name or reference.');return}if(!state.selected)state.selected=id();c.id=state.selected;let i=state.clients.findIndex(x=>x.id===c.id);if(i<0)state.clients.push(c);else state.clients[i]=c;persist().then(ok=>{$('saveMessage').textContent=ok?'Client saved on this device.':'Client NOT saved — export backup.'});refreshClients();updateBuilder()};
 $('deleteClient').onclick=()=>{if(!state.selected)return;if(!confirm('Delete this client profile?'))return;state.clients=state.clients.filter(c=>c.id!==state.selected);state.reviews=(state.reviews||[]).filter(r=>r.clientId!==state.selected);state.trainingRecords=(state.trainingRecords||[]).filter(r=>r.clientId!==state.selected);state.challenges=(state.challenges||[]).filter(r=>r.clientId!==state.selected);if(state.planClient===state.selected){archiveProgramme('Before client deletion');state.sessions=[];state.planClient=''}delete state.clientProgrammes[state.selected];state.selected='';fillForm({});persist();refreshClients();renderProgramme();updateBuilder()};
 function updateStats(){$('statClients').textContent=state.clients.length;$('statExercises').textContent=state.exercises.length;$('statSessions').textContent=state.sessions.length;
 const el=$('studioSnapshot');if(el){const logs=(state.trainingRecords||[]).length,chs=(state.challenges||[]).length,rest=state.sessions.filter(x=>x.restDay).length;
@@ -2162,8 +2184,8 @@ let v47Pending=null,v47BuilderDirty=false,v47BuilderOwner=null;
 function v47Status(message){for(const k of ['builderSaveStatus','programmeSaveStatus']){const el=$(k);if(el)el.textContent=message+' · '+new Date().toLocaleTimeString()}}
 function v47CaptureBuilder(){return Object.fromEntries(v47BuilderFields.map(k=>[k,$(k).type==='checkbox'?$(k).checked:$(k).value]))}
 function v47ApplyBuilder(v){if(!v)return;v47BuilderFields.forEach(k=>{if(v[k]===undefined)return;const el=$(k);if(el.type==='checkbox')el.checked=Boolean(v[k]);else el.value=v[k]})}
-function v47SavePending(){if(!window.v48AutosaveReady)return;if(v47Pending){clearTimeout(v47Pending);v47Pending=null}if(v47BuilderDirty){const owner=v47BuilderOwner||'standalone';state.v47BuilderDrafts=state.v47BuilderDrafts||{};state.v47BuilderDrafts[owner]=v47CaptureBuilder();v47BuilderDirty=false}if(state){persist()}}
-function v47SaveNow(){v47SavePending();v45AutoSnapshot(true);v47Status('Programme saved');}
+function v47SavePending(){if(!window.v48AutosaveReady)return;if(v47Pending){clearTimeout(v47Pending);v47Pending=null}if(v47BuilderDirty){const owner=v47BuilderOwner||'standalone';state.v47BuilderDrafts=state.v47BuilderDrafts||{};state.v47BuilderDrafts[owner]=v47CaptureBuilder();v47BuilderDirty=false;persist()}}
+async function v47SaveNow(){v47SavePending();const ok=await persist();if(ok)v47Status('Programme saved to device');}
 function v47RestoreBuilder(){const owner=state.selected||'standalone';state.v47BuilderDrafts=state.v47BuilderDrafts||{};if(v47BuilderOwner&&v47BuilderOwner!==owner&&v47BuilderDirty)v47SavePending();v47BuilderOwner=owner;const saved=state.v47BuilderDrafts[owner];if(saved)v47ApplyBuilder(saved);else{const c=activeClient();$('emphasis').value=v47GoalEmphasis(v47Goals(c));$('trainerNotes').value='';}v47BuilderDirty=false;v47Status(saved?'Draft restored':'Autosave ready');}
 for(const field of v47BuilderFields){$(field).addEventListener('input',()=>{v47BuilderDirty=true;v47Status('Unsaved changes — autosaving');if(v47Pending)clearTimeout(v47Pending);v47Pending=setTimeout(v47SavePending,650)});$(field).addEventListener('change',()=>{v47BuilderDirty=true;v47SavePending()})}
 $('saveProgrammeNow').onclick=v47SaveNow;
@@ -2181,7 +2203,7 @@ v47FillGoals(activeClient());
 window.v48AutosaveReady=true;
 
 // v48: safe, explicitly fictional demonstration data. Does not modify existing clients.
-$('createDemoClient').onclick=()=>{
+$('createDemoClient').onclick=async()=>{
  if(!confirm('Create a fictional SAMPLE client and a three-day example programme? Your existing clients will not be changed.'))return;
  // Save the current workspace before switching to the demo profile.
  v47SavePending();saveProgrammeWorkspace();
@@ -2192,9 +2214,9 @@ $('createDemoClient').onclick=()=>{
  state.clients.push(c);state.clientProgrammes=state.clientProgrammes||{};state.clientProgrammes[owner]={sessions:structuredClone(sessions),notes:'DEMONSTRATION ONLY. This programme is fictional, not personalised advice.'};
  state.selected=owner;state.planClient=owner;state.sessions=structuredClone(sessions);state.notes='DEMONSTRATION ONLY. This programme is fictional, not personalised advice.';
  state.v47BuilderDrafts=state.v47BuilderDrafts||{};state.v47BuilderDrafts[owner]={emphasis:'Balanced fitness',format:'Full body',includeCardio:true,cardioPlacement:'end',cardioMinutes:'10',trainerNotes:'Demo programme — sample client'};
- persist();refreshClients();fillForm(c);updateBuilder();renderProgramme();
- $('saveMessage').textContent='Fictional demo client and 3-day programme created. Open Programme editor to try it.';
- alert('Sample client and example programme created. You can safely edit them to test features.');
+ const stored=await persist();refreshClients();fillForm(c);updateBuilder();renderProgramme();
+ $('saveMessage').textContent=stored?'Fictional demo client and 3-day programme created and saved.':'Demo client created but NOT saved. Export backup before closing.';
+ if(stored)alert('Sample client and example programme created and saved. You can edit them to test features.');
  switchScreen('programme');
 };
 

@@ -1,4 +1,4 @@
-Fitness Programme Manager v48
-Fixes v47 navigation regression: screen changes no longer call autosave before initialization.
-New: Add Client > Generate sample client + programme creates a clearly fictional client and 3-day programme, without changing existing clients.
-Retains v47 features, direct sharing, icons, and browser storage key. Back up before upgrading.
+Fitness Programme Manager v49 — browser storage fix and demo client repair.
+New: full app records saved to IndexedDB (much larger capacity than localStorage), with serialised writes and error reporting. Existing localStorage data is read as before and never cleared. Demo client confirmation appears only after successful save. The Save Programme button now reports the real storage result. Removed unnecessary autosave on every tab switch.
+IMPORTANT: Before updating, export an encrypted backup from the current app if possible. DO NOT clear site data, uninstall the PWA, or remove browser storage. Keep the same GitHub Pages URL. IndexedDB is device-local, not cloud sync. If the device storage itself is full, free space elsewhere without clearing browser site data.
+After updating, test generating a fictional client, switch tabs, close and reopen, then check that the demo remains. The app has not been interactively tested on Android.

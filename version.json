@@ -1,5 +1,5 @@
 {
-  "version": "48",
+  "version": "49",
   "release": "2026-11-09",
-  "features": "Fixed navigation/autosave startup regression; fictional demo client and example programme; retained v47 features"
+  "features": "IndexedDB large-storage autosave; demo client reliable save; navigation fixes; all v48 features"
 }
