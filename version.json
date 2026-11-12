@@ -1,5 +1,5 @@
 {
-  "version": "57",
+  "version": "58",
   "release": "2026-11-09",
-  "features": "Rebuilt Client Companion client/programme selectors; refresh after saved data loads; preserve programme choice"
+  "features": "Client Companion includes all saved client programmes, selectable programme and workout days"
 }
