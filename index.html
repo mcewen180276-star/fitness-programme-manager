@@ -145,11 +145,11 @@ nav button{border-radius:11px!important}
 @media print{body:not(.print-training):not(.print-dashboard):not(.print-challenge):not(.print-client-review):not(.print-report) #printPlan{break-before:auto!important;page-break-before:auto!important}#printPlan .programme-document-heading{margin-bottom:7px!important;padding-bottom:4px!important}#printPlan #printHeader h2{margin:4px 0!important}#printPlan #printHeader p{margin:3px 0!important}#printPlan .print-client-overview{break-inside:avoid;page-break-inside:avoid;padding:8px!important;margin:6px 0 10px!important;font-size:11px}#printPlan .print-client-overview p{margin:3px 0}#printPlan #sessions{break-before:auto!important;page-break-before:auto!important}#printPlan #sessions>.session:first-child{break-before:auto!important;page-break-before:auto!important}#printPlan .programme-document-heading h1{font-size:20px!important}}
 </style><meta name="application-name" content="Fitness Manager"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<header><div class="app-version">FITNESS STUDIO · VERSION 51</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
+<header><div class="app-version">FITNESS STUDIO · VERSION 52</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
 <main>
 <nav class="no-print">
 <button class="active" data-screen="dashboard">Overview</button><button data-screen="clients">Clients</button><button data-screen="library">Exercise library</button><button data-screen="builder">Programme creator</button><button data-screen="programme">Edit & print</button><button data-screen="weekly">Weekly planner</button><button data-screen="workoutMode">Workout mode</button><button data-screen="training">Training record</button><button data-screen="progress">Assessment & progress</button><button data-screen="templates">My templates</button><button data-screen="calculators">Fitness calculators</button><button data-screen="dashboardProgress">Progress dashboard</button><button data-screen="clientReport">Client review report</button><button data-screen="branding">Business branding</button><button data-screen="challenges">Challenges</button><button data-screen="calendar">Calendar</button><button data-screen="companion">Client mini app</button><button data-screen="privacy">Backup & privacy</button>
-<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v51 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
+<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v52 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
 
 <section id="foodDiary" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Food & hydration diary</h2><p class="muted">Optional, descriptive wellbeing diary. No calorie counts, body targets, food scoring or automatic nutrition judgements. Diary records are private unless a client chooses to export and share them.</p>
@@ -2050,7 +2050,9 @@ $('safetyBackup').onclick=()=>switchScreen('privacy');
 $('safetyHistory').addEventListener('click',e=>{const b=e.target.closest('[data-safety-restore]');if(b)v43Restore(b.dataset.safetyRestore)});
 
 $('openStandaloneProgramme').onclick=()=>openProgrammeWorkspace('');$('openSelectedClientProgramme').onclick=()=>{if(!state.selected){alert('Select a client in Clients first.');return}openProgrammeWorkspace(state.selected)};refreshClients();renderProgrammeTargets();renderProgrammeHistory();if(state.selected)fillForm(activeClient());renderLibrary();renderProgramme();updateBuilder();renderReviews();updateStats();updateBrandHeaders();
-})();
+
+// v52: repair module scope for all post-v44 features.
+
 
 // v45 connected coaching centre: additive, backward-compatible storage.
 state.v45Equipment=Array.isArray(state.v45Equipment)?state.v45Equipment:[];
@@ -2171,8 +2173,8 @@ $('v51OpenProgrammeEditor').onclick=()=>switchScreen('programme');
 const v51OldSwitchScreen=switchScreen;
 switchScreen=function(name){v51OldSwitchScreen(name);if(name==='builder')v51RenderSaved();if(name==='companion'){const c=activeClient();const found=c?v51ClientProgrammes(c.id):[];const msg=$('companionStatus');if(msg)msg.textContent=c?(found.length?'Selected: '+c.firstName+' · '+found.length+' saved/current programme entries available for sharing.':'Selected: '+c.firstName+' · no saved programme yet.'):'Select a client in Clients before sharing.';}};
 
-</script>
-<script>if ('serviceWorker' in navigator && location.protocol !== 'file:') {window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker registration failed',err)));}
+
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker registration failed',err)));}
 // v44: opt-in food diary settings and separate client-approved diary import.
 state.foodSettings=state.foodSettings||{};
 state.foodDiaryImports=state.foodDiaryImports||{};
@@ -2304,5 +2306,8 @@ $('createDemoClient').onclick=async()=>{
  }finally{button.disabled=false}
 };
 
+
+})();
 </script>
+
 </body></html>

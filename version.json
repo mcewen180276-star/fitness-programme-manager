@@ -1,5 +1,5 @@
 {
-  "version": "51",
+  "version": "52",
   "release": "2026-11-09",
-  "features": "Saved client programmes in creator, correct Client Companion export, reliable IndexedDB assignment"
+  "features": "Fix state not defined in Client Companion and other tabs by restoring common module scope"
 }
