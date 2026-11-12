@@ -1,5 +1,5 @@
 {
-  "version": "47",
+  "version": "48",
   "release": "2026-11-09",
-  "features": "Save programme, autosave builder and edits, multiple client goals, client print overview, all v46 features"
+  "features": "Fixed navigation/autosave startup regression; fictional demo client and example programme; retained v47 features"
 }
