@@ -1,7 +1,5 @@
-Fitness Programme Manager v54
-- Fix Client Companion error from missing foodSettings object on existing client records.
-- Choose client AND specific saved programme directly in Client Companion. No editor switching needed.
-- Edit & Print: collapse/expand each day; move days up or down. Printing expands all days.
-- Removed broken sample-client generator button and handler; existing saved demo profiles are not deleted.
-- Existing data format and other features retained. Back up before upgrading; do not clear browser storage.
-- JavaScript syntax verified; test on Android after GitHub Pages deployment.
+Fitness Programme Manager v55 — Client programme controls repair
+
+Changes: New programme button uses the client dropdown, saves a named record before opening; saved-programme Open, Rename and Duplicate actions have explicit handlers; Client Companion client and programme dropdowns refresh independently; save button and editor changes update the active named programme; errors are shown instead of failing silently.
+
+Important: Back up your records before updating. Do not clear browser storage or uninstall the app. This build has passed JavaScript syntax checks, but Android interaction still requires verification.

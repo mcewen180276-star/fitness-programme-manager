@@ -148,11 +148,11 @@ nav button{border-radius:11px!important}
 @media print{.v54-day-collapsed > :not(.v54-day-head){display:block!important}}
 </style><meta name="application-name" content="Fitness Manager"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<header><div class="app-version">FITNESS STUDIO · VERSION 54</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
+<header><div class="app-version">FITNESS STUDIO · VERSION 55</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
 <main>
 <nav class="no-print">
 <button class="active" data-screen="dashboard">Overview</button><button data-screen="clients">Clients</button><button data-screen="library">Exercise library</button><button data-screen="builder">Programme creator</button><button data-screen="programme">Edit & print</button><button data-screen="weekly">Weekly planner</button><button data-screen="workoutMode">Workout mode</button><button data-screen="training">Training record</button><button data-screen="progress">Assessment & progress</button><button data-screen="templates">My templates</button><button data-screen="calculators">Fitness calculators</button><button data-screen="dashboardProgress">Progress dashboard</button><button data-screen="clientReport">Client review report</button><button data-screen="branding">Business branding</button><button data-screen="challenges">Challenges</button><button data-screen="calendar">Calendar</button><button data-screen="companion">Client mini app</button><button data-screen="privacy">Backup & privacy</button>
-<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v54 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
+<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="circuitStudio">Circuit studio</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="coachJourney">Client journey</button><button data-screen="smartBuilder">Smart generator</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v55 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
 
 <section id="foodDiary" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Food & hydration diary</h2><p class="muted">Optional, descriptive wellbeing diary. No calorie counts, body targets, food scoring or automatic nutrition judgements. Diary records are private unless a client chooses to export and share them.</p>
@@ -2297,7 +2297,7 @@ function v53SaveActive(){
  selected.updated=new Date().toISOString();
 }
 function v53RenderProgrammes(){
- const owner=state.selected;
+ const owner=$('clientSelect')?.value||state.selected;
  const c=state.clients.find(x=>x.id===owner);
  for(const target of ['v53ProgrammeList','v53BuilderProgrammes']){
   const el=$(target);if(!el)continue;
@@ -2357,10 +2357,114 @@ function v53HandleListClick(e){
 $('v53ProgrammeList').addEventListener('click',v53HandleListClick);
 $('v53BuilderProgrammes').addEventListener('click',v53HandleListClick);
 // Extend saving without replacing the existing IndexedDB implementation.
-const v53OriginalSaveWorkspace=saveProgrammeWorkspace;
-saveProgrammeWorkspace=function(){v53OriginalSaveWorkspace();v53SaveActive()};
-const v53OldRenderTargets=renderProgrammeTargets;
-renderProgrammeTargets=function(){v53OldRenderTargets();v53RenderProgrammes()};
+// v55: do not overwrite named programme records during every generic autosave.
+// Named programme records are updated explicitly when saving a named programme.
+
+
+
+// v55: robust client/programme actions with explicit client selection, visible errors and verified save.
+function v55Owner(){
+ const selected=$('clientSelect')?.value||state.selected;
+ return state.clients.some(c=>c.id===selected)?selected:'';
+}
+function v55Status(message){
+ for(const id of ['v53ProgrammeMessage','v54CompanionHint']){const el=$(id);if(el&&((id==='v53ProgrammeMessage')||document.getElementById('companion')?.classList.contains('active')))el.textContent=message;}
+}
+async function v55SaveCurrent(){
+ const owner=state.planClient;
+ if(!owner)return await persist();
+ const active=(state.v53Programmes?.[owner]||[]).find(x=>x.id===state.v53ActiveProgramme?.[owner]);
+ if(active){
+  active.sessions=structuredClone(state.sessions);
+  active.notes=state.notes||'';
+  active.updated=new Date().toISOString();
+ }
+ return await persist();
+}
+async function v55Open(owner,plan){
+ if(!owner||!plan)return;
+ try{
+  // Capture edits to the previously active plan before switching.
+  await v55SaveCurrent();
+  state.selected=owner;
+  state.v53ActiveProgramme[owner]=plan.id;
+  state.planClient=owner;
+  state.sessions=structuredClone(plan.sessions||[]);
+  state.notes=plan.notes||'';
+  state.clientProgrammes[owner]={sessions:structuredClone(state.sessions),notes:state.notes};
+  lastSavedProgramme=JSON.stringify({owner,sessions:state.sessions,notes:state.notes});
+  const select=$('clientSelect');if(select)select.value=owner;
+  const saved=await persist();
+  if(!saved)throw Error('Device storage could not confirm the save.');
+  renderProgramme();v53RenderProgrammes();v54CompanionChoices();
+  switchScreen('programme');
+ }catch(e){v55Status('Could not open programme: '+e.message);alert('Could not open programme: '+e.message)}
+}
+$('v53NewProgramme').onclick=async()=>{
+ const owner=v55Owner();if(!owner)return alert('First choose a saved client from the client dropdown.');
+ const name=prompt('Name the new programme:','New programme');if(name===null)return;
+ if(!name.trim())return alert('Enter a programme name.');
+ try{
+  await v55SaveCurrent();
+  const entry={id:id(),name:name.trim().slice(0,100),created:new Date().toISOString(),updated:new Date().toISOString(),sessions:[{id:id(),name:'Day 1 — Workout',focus:'Trainer-designed',items:[]}],notes:''};
+  state.v53Programmes[owner] ||= [];
+  state.v53Programmes[owner].push(entry);
+  // Save before opening, to protect the newly created record.
+  const ok=await persist();if(!ok)throw Error('Browser storage could not save the new programme.');
+  await v55Open(owner,entry);
+ }catch(e){v55Status('New programme failed: '+e.message);alert('New programme failed: '+e.message)}
+};
+function v55ListClick(e){
+ const b=e.target.closest('button');if(!b)return;
+ const owner=v55Owner();if(!owner){alert('Select a client first.');return}
+ const key=['v53Open','v53Rename','v53Copy'].find(x=>b.dataset[x]!==undefined);if(!key)return;
+ const plan=(state.v53Programmes?.[owner]||[])[Number(b.dataset[key])];
+ if(!plan)return alert('Programme not found. Refresh the client selection.');
+ e.stopImmediatePropagation();
+ if(key==='v53Open'){v55Open(owner,plan);return}
+ if(key==='v53Rename'){
+  const name=prompt('Programme name:',plan.name||'Programme');
+  if(name===null||!name.trim())return;
+  plan.name=name.trim().slice(0,100);plan.updated=new Date().toISOString();
+  persist().then(ok=>{v53RenderProgrammes();v55Status(ok?'Programme renamed and saved.':'Rename not saved — storage full.')});
+  return;
+ }
+ const name=prompt('Name the duplicate:','Copy of '+plan.name);
+ if(name===null||!name.trim())return;
+ const copy={...structuredClone(plan),id:id(),name:name.trim().slice(0,100),created:new Date().toISOString(),updated:new Date().toISOString()};
+ (state.v53Programmes[owner] ||= []).push(copy);
+ persist().then(ok=>{if(ok)v55Open(owner,copy);else alert('Could not save duplicate.')});
+}
+for(const id of ['v53ProgrammeList','v53BuilderProgrammes']){
+ const el=$(id);
+ if(el){const clone=el.cloneNode(false);clone.innerHTML=el.innerHTML;el.replaceWith(clone);clone.addEventListener('click',v55ListClick)}
+}
+// Keep the client dropdown independent from the programme editor and preserve selection.
+$('v54CompanionClient').onchange=()=>{
+ const cid=$('v54CompanionClient').value;
+ const plans=v54PlansFor(cid);
+ const psel=$('v54CompanionProgramme');
+ psel.innerHTML='<option value="">Choose a programme</option>'+plans.map(x=>`<option value="${esc(x.key)}">${esc(x.name||'Saved programme')} (${x.sessions.length} days)</option>`).join('');
+ if(plans.length)psel.value=plans[0].key;
+ $('v54CompanionHint').textContent=plans.length?'Choose the programme you want to send.':'No saved programmes for this client.';
+};
+const v55OriginalCompanionChoices=v54CompanionChoices;
+v54CompanionChoices=function(){
+ const previous=$('v54CompanionClient').value;
+ v55OriginalCompanionChoices();
+ if(previous&&state.clients.some(c=>c.id===previous))$('v54CompanionClient').value=previous;
+ $('v54CompanionClient').onchange();
+};
+$('v54CompanionProgramme').onchange=()=>{
+ const cid=$('v54CompanionClient').value,selected=$('v54CompanionProgramme').value;
+ $('companionPrivacyPreview').textContent='';
+ $('v54CompanionHint').textContent=selected?'Selected programme ready to preview.':'Choose a programme to send.';
+};
+$('clientSelect').addEventListener('change',()=>{queueMicrotask(()=>{v53RenderProgrammes();v54CompanionChoices()})});
+// Save the active named programme when using the editor Save button or autosave.
+$('saveProgrammeNow').onclick=async()=>{try{v47SavePending();const ok=await v55SaveCurrent();v47Status(ok?'Named programme and workspace saved.':'Save failed — check storage.');v53RenderProgrammes()}catch(e){alert('Save failed: '+e.message)}};
+$('sessions').addEventListener('change',()=>{if(state.planClient&&state.v53ActiveProgramme?.[state.planClient])v55SaveCurrent().catch(e=>v55Status('Autosave failed: '+e.message))});
+
 
 })();
 </script>

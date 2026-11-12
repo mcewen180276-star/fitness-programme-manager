@@ -1,5 +1,5 @@
 {
-  "version": "54",
+  "version": "55",
   "release": "2026-11-09",
-  "features": "Mini app client and programme selection; food settings undefined fix; collapsible and reorderable days; sample client generator removed"
+  "features": "Repair new/open client programme, independent companion selectors, explicit save, visible errors"
 }
