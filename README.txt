@@ -1,5 +1,4 @@
-Fitness Programme Manager v55 — Client programme controls repair
-
-Changes: New programme button uses the client dropdown, saves a named record before opening; saved-programme Open, Rename and Duplicate actions have explicit handlers; Client Companion client and programme dropdowns refresh independently; save button and editor changes update the active named programme; errors are shown instead of failing silently.
-
-Important: Back up your records before updating. Do not clear browser storage or uninstall the app. This build has passed JavaScript syntax checks, but Android interaction still requires verification.
+Fitness Programme Manager v56 — streamlined navigation and guided Client Companion workout
+Removed from visible navigation and dashboard: Circuit builder, Smart generator, Weekly planner, Client journey, Progress dashboard. Their underlying saved data is preserved for compatibility, and old code is retained so existing records are not deleted.
+Client Companion: Workout mode with workout-day selector, exercise/set voice announcements, rest countdown, 3-second notice, next/previous, pause/resume, and stop. Speech uses the Android browser speech synthesis and may require a user interaction; timers pause when the page is backgrounded. Exercise repetition sets require manual Next.
+IMPORTANT: Back up existing records before uploading all ZIP contents to your existing GitHub Pages repository. This is a feature update, not a verified Android end-to-end test. Client mini-app HTML files are not encrypted; share privately.

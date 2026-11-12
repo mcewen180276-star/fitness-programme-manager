@@ -1,5 +1,5 @@
 {
-  "version": "55",
+  "version": "56",
   "release": "2026-11-09",
-  "features": "Repair new/open client programme, independent companion selectors, explicit save, visible errors"
+  "features": "Simplified navigation, guided voice workout in Client Companion"
 }
