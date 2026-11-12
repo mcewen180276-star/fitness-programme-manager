@@ -152,7 +152,7 @@ nav button{border-radius:11px!important}
 <main>
 <nav class="no-print">
 <button class="active" data-screen="dashboard">Overview</button><button data-screen="clients">Clients</button><button data-screen="library">Exercise library</button><button data-screen="builder">Programme creator</button><button data-screen="programme">Edit & print</button><button data-screen="workoutMode">Workout mode</button><button data-screen="training">Training record</button><button data-screen="progress">Assessment & progress</button><button data-screen="templates">My templates</button><button data-screen="calculators">Fitness calculators</button><button data-screen="clientReport">Client review report</button><button data-screen="branding">Business branding</button><button data-screen="challenges">Challenges</button><button data-screen="calendar">Calendar</button><button data-screen="companion">Client mini app</button><button data-screen="privacy">Backup & privacy</button>
-<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v61 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
+<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v62 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
 
 <section id="foodDiary" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Food & hydration diary</h2><p class="muted">Optional, descriptive wellbeing diary. No calorie counts, body targets, food scoring or automatic nutrition judgements. Diary records are private unless a client chooses to export and share them.</p>
@@ -177,7 +177,7 @@ nav button{border-radius:11px!important}
 <div id="liveWorkoutExercises"></div></div></section>
 <section id="clients" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Client records</h2><div class="row"><select id="clientSelect" aria-label="Select client"><option value="">Choose a client</option></select><button class="btn" id="newClient">New client</button><button class="btn" id="deleteClient">Delete selected</button></div><p class="muted">Multiple client profiles are supported. Avoid entering sensitive medical details into this prototype.</p></div>
-<div class="card"><h3>Client programme library</h3><p class="muted">Keep several named programmes for each client. Opening a programme does not delete their other programmes. Choose the active programme to send in Client Companion.</p><div class="row"><button class="btn primary" id="v53NewProgramme">+ New programme for this client</button><button class="btn" id="v53SaveProgramme">Save current as a new named programme</button></div><p id="v53ProgrammeMessage" class="muted"></p><div class="card"><h3>Saved for client — named and dated</h3><p>Only programmes you explicitly save here can be sent in the Client Companion. Autosaves remain in the private archive.</p><div class="row"><button class="btn primary" id="v61Publish">Save current programme for client</button></div><div id="v61Published"></div><details><summary>Autosave & edit history (private archive)</summary><div id="v61Archive"></div></details></div><div id="v53ProgrammeList"></div></div><div class="card"><h3>Personal information</h3><div class="grid">
+<div class="card"><h3>Client programme library</h3><p class="muted">Keep several named programmes for each client. Opening a programme does not delete their other programmes. Choose the active programme to send in Client Companion.</p><div class="row"><button class="btn primary" id="v53NewProgramme">+ New programme for this client</button><button class="btn" id="v53SaveProgramme">Save current as a new named programme</button></div><p id="v53ProgrammeMessage" class="muted"></p><div class="card"><h3>Saved for client — named and dated</h3><p>Only programmes you explicitly save here can be sent in the Client Companion. Autosaves remain in the private archive.</p><div class="row"><button class="btn primary" id="v61Publish">Save current programme for client</button></div><div id="v61Published"></div><details><summary>Autosave & edit history (private archive)</summary><div id="v61Archive"></div></details></div><details><summary>Working drafts (private — not sent to clients)</summary><div id="v53ProgrammeList"></div></details></div><div class="card"><h3>Personal information</h3><div class="grid">
 <div class="field"><label>First name / display name</label><input id="firstName"></div><div class="field"><label>Surname</label><input id="lastName"></div>
 <div class="field"><label>Client reference</label><input id="clientRef"></div><div class="field"><label>Age</label><input id="age" type="number" min="18" max="110"></div>
 <div class="field"><label>Height (cm) – optional</label><input id="height" type="number"></div><div class="field"><label>Weight (kg) – optional</label><input id="weight" type="number"></div>
@@ -227,7 +227,7 @@ nav button{border-radius:11px!important}
 <div class="card"><h3>Progression framework</h3><p>Weekly progression is presented as a review guide, not an automatic instruction to increase workload. Progress only when technique, recovery and client response are appropriate.</p><div id="progressionPreview"></div></div>
 </section>
 <section id="programme" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
-<div class="card no-print"><h2>Programme safety & recovery</h2><p class="muted">Each client has a separate programme. Opening a template works in a standalone workspace and does not replace a client's programme. You must explicitly assign a copy.</p><div class="row"><button type="button" class="btn" id="openStandaloneProgramme">Open standalone workspace</button><button type="button" class="btn" id="openSelectedClientProgramme">Open selected client's programme</button></div><div class="row"><label>Assign a copy to client <select id="assignProgrammeTarget"><option value="">Choose a client...</option></select></label><button type="button" class="btn primary" id="assignProgrammeClient">Assign programme copy</button></div><details><summary><b>Previous programme versions — recovery</b></summary><div id="programmeHistoryList"></div></details></div><div class="card no-print"><h2>Programme editor</h2><p class="muted">You can build programmes without a client. Use <b>Save as template</b> below, then find it under <b>My templates</b>. Templates can be edited and saved as new copies.</p><div class="row"><button class="btn primary" id="addSession">+ Add workout day</button><button class="btn" id="addRestDay">+ Add rest day</button><button class="btn" id="saveTemplate">Save as template</button><button class="btn primary" id="saveProgrammeNow">Save programme</button><span class="muted" id="programmeSaveStatus" role="status">Autosave enabled</span><button class="btn primary" id="printButton">Print / Save as PDF</button><label class="qr-toggle"><input id="printTechniqueQR" type="checkbox"> Add technique QR codes to printout (internet needed)</label><button class="btn" id="exportButton">Export backup JSON</button><label class="btn">Import backup <input id="importFile" type="file" accept=".json,application/json" hidden></label></div><p class="muted">Use “Search library & add exercise” within any workout day to find and insert exercises directly. Edit session names, exercises, suggested weight, weight used, sets, reps, rest, video links and coaching notes. Suggested weights are trainer-entered, not automatically prescribed. Use your browser's print dialogue to save as PDF.</p></div>
+<div class="card no-print"><h2>Programme safety & recovery</h2><p class="muted">Each client has a separate programme. Opening a template works in a standalone workspace and does not replace a client's programme. You must explicitly assign a copy.</p><div class="row"><button type="button" class="btn" id="openStandaloneProgramme">Open standalone workspace</button><button type="button" class="btn" id="openSelectedClientProgramme">Open selected client's programme</button></div><div class="row"><label>Assign a copy to client <select id="assignProgrammeTarget"><option value="">Choose a client...</option></select></label><button type="button" class="btn primary" id="assignProgrammeClient">Assign programme copy</button></div><details><summary><b>Autosave archive — previous versions (recovery only)</b></summary><div id="programmeHistoryList"></div></details></div><div class="card no-print"><h2>Open a saved client programme</h2><p class="muted">Choose a named, dated saved copy to open in Edit & Print. Editing does not change the saved copy until you explicitly save it again.</p><div class="row"><select id="v62EditorSaved"><option value="">Choose saved programme</option></select><button class="btn" id="v62EditorOpen">Open selected</button></div></div><div class="card no-print"><h2>Programme editor</h2><p class="muted">You can build programmes without a client. Use <b>Save as template</b> below, then find it under <b>My templates</b>. Templates can be edited and saved as new copies.</p><div class="row"><button class="btn primary" id="addSession">+ Add workout day</button><button class="btn" id="addRestDay">+ Add rest day</button><button class="btn" id="saveTemplate">Save as template</button><button class="btn" id="saveProgrammeNow">Save draft (private)</button><button class="btn primary" id="v62SaveApproved">Save named & dated for client</button><span class="muted" id="programmeSaveStatus" role="status">Autosave enabled</span><button class="btn primary" id="printButton">Print / Save as PDF</button><label class="qr-toggle"><input id="printTechniqueQR" type="checkbox"> Add technique QR codes to printout (internet needed)</label><button class="btn" id="exportButton">Export backup JSON</button><label class="btn">Import backup <input id="importFile" type="file" accept=".json,application/json" hidden></label></div><p class="muted">Use “Search library & add exercise” within any workout day to find and insert exercises directly. Edit session names, exercises, suggested weight, weight used, sets, reps, rest, video links and coaching notes. Suggested weights are trainer-entered, not automatically prescribed. Use your browser's print dialogue to save as PDF.</p></div>
 <div id="printPlan" class="card"><div id="programmeBrandHeader" class="brand-print-header"></div><div class="programme-document-heading"><h1 style="font-size:25px;margin:0">PERSONAL TRAINING PROGRAMME</h1><p class="muted">Individual training plan</p></div><div id="printHeader"></div><div id="printClientOverview" class="print-client-overview"></div><div id="sessions"></div><div id="progressionPlan"></div><div style="margin-top:22px;border-top:1px solid #bbb;padding-top:12px"><h3>Trainer review and notes</h3><p id="printedNotes"></p><p>Client acknowledgement: ________________________ Date: ______________</p><p>Trainer: <span id="programmeTrainerSignature">________________________________________</span></p></div></div>
 </section>
 <section id="progress" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
@@ -811,9 +811,9 @@ let v49InitialLoadFinished=false;
 v49DbLoad().then(saved=>{
  if(saved?.data?.clients&&Array.isArray(saved.data.exercises)){
   // Do not replace live changes made while the database was opening.
-  if(!v49InitialLoadFinished){state={...state,...saved.data};state.v61Published=state.v61Published||{};state.clientProgrammes=state.clientProgrammes||{};state.programmeHistory=state.programmeHistory||[];state.standaloneProgramme=state.standaloneProgramme||{sessions:[],notes:''};lastSavedProgramme=JSON.stringify({owner:state.planClient||'standalone',sessions:state.sessions,notes:state.notes});refreshClients();fillForm(activeClient());renderProgramme();renderLibrary();updateBuilder();updateStats();}
+  if(!v49InitialLoadFinished){state={...state,...saved.data};state.clientProgrammes=state.clientProgrammes||{};state.programmeHistory=state.programmeHistory||[];state.standaloneProgramme=state.standaloneProgramme||{sessions:[],notes:''};lastSavedProgramme=JSON.stringify({owner:state.planClient||'standalone',sessions:state.sessions,notes:state.notes});refreshClients();fillForm(activeClient());renderProgramme();renderLibrary();updateBuilder();updateStats();}
  }
-}).catch(()=>{}).finally(()=>{v49InitialLoadFinished=true;queueMicrotask(()=>{try{v57PopulateClients()}catch(e){console.error('Client selector refresh failed',e)}})});
+}).catch(()=>{}).finally(()=>{v49InitialLoadFinished=true;queueMicrotask(()=>{try{v57PopulateClients();v61DrawLibrary();v62DrawEditorSaved()}catch(e){console.error('Client selector refresh failed',e)}})});
 function id(){return 'c'+Date.now()+Math.random().toString(16).slice(2,6)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function activeClient(){return state.clients.find(c=>c.id===state.selected)}
@@ -1570,9 +1570,8 @@ $('v54CompanionProgramme').onchange=()=>{$('companionPrivacyPreview').textConten
 function safeClientMiniPackage(){
  const cid=$('v54CompanionClient').value,c=state.clients.find(x=>x.id===cid);
  if(!c)throw Error('Select a client in Client Companion.');
- const checkedIds=[...document.querySelectorAll('#v61SendChoices input[type=checkbox]:checked')].map(el=>el.value);
- const chosen=v54PlansFor(cid).find(p=>p.key===$('v54CompanionProgramme').value&&checkedIds.includes(p.key))||v54PlansFor(cid).find(p=>checkedIds.includes(p.key));
- if(!chosen)throw Error('Choose a saved programme for this client.');
+ const chosen=v54PlansFor(cid).find(p=>p.key===$('v54CompanionProgramme').value && document.querySelector('#v61SendChoices input[value="'+CSS.escape(p.key)+'"]:checked')) || v54PlansFor(cid).find(p=>document.querySelector('#v61SendChoices input[value="'+CSS.escape(p.key)+'"]:checked'));
+ if(!chosen)throw Error('Select at least one named, dated saved programme for this client.');
  const allSessions=chosen.sessions||[];
  const allChallenges=(state.challenges||[]).filter(x=>x.clientId===cid);
  if(!allSessions.length)throw Error('This programme has no workout days.');
@@ -1581,7 +1580,7 @@ function safeClientMiniPackage(){
  const cleanSession=day=>({id:String(day?.id||''),name:String(day?.name||''),focus:String(day?.focus||''),restDay:!!day?.restDay,items:(day?.items||[]).filter(Boolean).map(it=>it.category==='Section'?{id:String(it.id||''),name:String(it.name||''),category:'Section'}:cleanItem(it))});
  const cleanPlan=plan=>plan?{sessions:(plan.sessions||[]).map(cleanSession)}:null;
  const sessions=allSessions.map(cleanSession);
- const selectedIds=checkedIds;
+ const selectedIds=[...document.querySelectorAll('#v61SendChoices input[type=checkbox]:checked')].map(el=>el.value);
  const programmes=v54PlansFor(cid).filter(plan=>selectedIds.includes(plan.key)).map(plan=>({id:String(plan.key),name:String(plan.name||'Programme'),date:String(plan.date||''),sessions:(plan.sessions||[]).map(cleanSession)}));
  if(!programmes.length)throw Error('Tick at least one saved programme to include.');
 
@@ -2457,7 +2456,7 @@ function v57PopulateClients(){
 function v57PopulatePlans(){
  const cid=$('v54CompanionClient').value,psel=$('v54CompanionProgramme'),previous=psel.value;
  const plans=v54PlansFor(cid);
- psel.innerHTML='<option value="">Choose a programme</option>'+plans.map(p=>`<option value="${esc(p.key)}">${esc(p.name||'Saved programme')} (${(p.sessions||[]).length} days)</option>`).join('');
+ psel.innerHTML='<option value="">Choose a programme</option>'+plans.map(p=>`<option value="${esc(p.key)}">${esc(p.name||'Saved programme')} — ${esc(p.date||'Undated')} (${(p.sessions||[]).length} days)</option>`).join('');
  const active=state.v53ActiveProgramme?.[cid];
  psel.value=plans.some(p=>p.key===previous)?previous:(plans.some(p=>p.key===active)?active:(plans[0]?.key||''));
  $('v54CompanionHint').textContent=!cid?'Choose a client to see their programmes.':plans.length?`${plans.length} programme(s) available. Choose one to preview or share.`:'No saved programme found for this client.';
@@ -2484,7 +2483,7 @@ function v61DrawLibrary(){
  const history=(state.programmeHistory||[]).filter(h=>h.owner===cid);
  archive.innerHTML=history.length?history.map(h=>`<div class="v43-entry">${esc((h.date||'').slice(0,19))} · ${esc(h.reason||'Autosaved edit')} · ${(h.sessions||[]).length} days</div>`).join(''):'<p>No archived edits for this client.</p>';
 }
-$('v61Publish').onclick=async()=>{
+async function v62PublishCurrent(){
  const cid=v61Owner();if(!state.clients.some(c=>c.id===cid))return alert('Choose a client first.');
  if(state.planClient!==cid)return alert('Open this client’s programme in the editor before saving it for sharing.');
  const name=prompt('Programme name for the client:','Training programme');if(name===null)return;
@@ -2492,12 +2491,15 @@ $('v61Publish').onclick=async()=>{
  const date=prompt('Programme date (YYYY-MM-DD):',new Date().toISOString().slice(0,10));if(date===null)return;
  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||Number.isNaN(Date.parse(date)))return alert('Use a valid date in YYYY-MM-DD format.');
  const record={id:id(),name:name.trim().slice(0,100),date,created:new Date().toISOString(),sessions:structuredClone(state.sessions)};
- state.v61Published=state.v61Published||{};
- (state.v61Published[cid] ||= []).push(record);
+ const published=state.v61Published[cid] ||= [];
+ const match=published.find(p=>p.name.toLowerCase()===record.name.toLowerCase()&&p.date===record.date);
+ if(match){if(!confirm('A saved programme with that name and date exists. Replace that saved copy with the current editor version?'))return;record.id=match.id;record.created=match.created;published.splice(published.indexOf(match),1,record)}
+ else published.push(record);
  const ok=await persist();
- if(!ok){state.v61Published[cid].pop();return alert('Could not save. Please make a backup and check available storage.')}
- v61DrawLibrary();v57PopulateClients();alert('Saved for sharing: '+record.name);
-};
+ if(!ok)return alert('Could not confirm the save. Make a backup and check storage before continuing.')
+ v61DrawLibrary();v57PopulateClients();v62DrawEditorSaved();alert('Saved for sharing: '+record.name);
+}
+$('v61Publish').onclick=v62PublishCurrent;
 $('v61Published').onclick=async e=>{
  const btn=e.target.closest('button');if(!btn)return;
  const kind=['open','rename','delete'].find(k=>btn.dataset['v61'+k[0].toUpperCase()+k.slice(1)]!==undefined);if(!kind)return;
@@ -2519,8 +2521,33 @@ v57PopulatePlans=function(){
  v61OldPopulatePlans();
  const cid=$('v54CompanionClient').value,plans=v54PlansFor(cid);
  const target=$('v61SendChoices');if(!target)return;
- target.innerHTML=plans.map(p=>`<label style="display:block;margin:.5em 0"><input type="checkbox" value="${esc(p.key)}" checked> ${esc(p.name)} — ${esc(p.date||'Undated')} (${(p.sessions||[]).length} days)</label>`).join('')||'<p>No explicitly saved programmes. Save a named, dated copy in Clients first.</p>';
+ const previous=[...target.querySelectorAll('input[type=checkbox]')].filter(e=>e.checked).map(e=>e.value),hadChoices=!!target.querySelector('input[type=checkbox]');
+ target.innerHTML=plans.map(p=>`<label style="display:block;margin:.5em 0"><input type="checkbox" value="${esc(p.key)}" ${(!hadChoices||previous.includes(p.key))?'checked':''}> ${esc(p.name)} — ${esc(p.date||'Undated')} (${(p.sessions||[]).length} days)</label>`).join('')||'<p>No named, dated saved programmes. Save a copy from Edit & Print first.</p>';
+ v62DrawEditorSaved();
 };
+
+
+function v62DrawEditorSaved(){
+ const sel=$('v62EditorSaved');if(!sel)return;
+ const owner=state.planClient||state.selected,old=sel.value;
+ const plans=v54PlansFor(owner);
+ sel.innerHTML='<option value="">Choose saved programme</option>'+plans.map(p=>`<option value="${esc(p.key)}">${esc(p.name)} — ${esc(p.date||'Undated')} (${p.sessions.length} days)</option>`).join('');
+ if(plans.some(p=>p.key===old))sel.value=old;
+}
+$('v62SaveApproved').onclick=v62PublishCurrent;
+$('v62EditorOpen').onclick=async()=>{
+ const owner=state.planClient||state.selected,plan=v54PlansFor(owner).find(p=>p.key===$('v62EditorSaved').value);
+ if(!plan)return alert('Choose a saved programme first.');
+ // Load as an editable copy; the approved snapshot is unchanged until explicitly saved again.
+ await v55SaveCurrent();state.selected=owner;state.planClient=owner;
+ state.sessions=structuredClone(plan.sessions);state.notes='';
+ state.clientProgrammes[owner]={sessions:structuredClone(state.sessions),notes:''};
+ lastSavedProgramme=JSON.stringify({owner,sessions:state.sessions,notes:state.notes});
+ await persist();renderProgramme();v53RenderProgrammes();switchScreen('programme');
+};
+queueMicrotask(()=>{v61DrawLibrary();v62DrawEditorSaved()});
+const v62OldRender=v53RenderProgrammes;
+v53RenderProgrammes=function(){v62OldRender();v62DrawEditorSaved()};
 
 })();
 </script>
