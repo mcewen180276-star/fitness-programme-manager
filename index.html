@@ -148,11 +148,11 @@ nav button{border-radius:11px!important}
 @media print{.v54-day-collapsed > :not(.v54-day-head){display:block!important}}
 </style><meta name="application-name" content="Fitness Manager"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<header><div class="app-version">FITNESS STUDIO · VERSION 56</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
+<header><div class="app-version">FITNESS STUDIO · VERSION 57</div><h1>Fitness Programme Manager</h1><p>Client assessment · Training-style generator · Manual builder · Templates · Printouts</p></header>
 <main>
 <nav class="no-print">
 <button class="active" data-screen="dashboard">Overview</button><button data-screen="clients">Clients</button><button data-screen="library">Exercise library</button><button data-screen="builder">Programme creator</button><button data-screen="programme">Edit & print</button><button data-screen="workoutMode">Workout mode</button><button data-screen="training">Training record</button><button data-screen="progress">Assessment & progress</button><button data-screen="templates">My templates</button><button data-screen="calculators">Fitness calculators</button><button data-screen="clientReport">Client review report</button><button data-screen="branding">Business branding</button><button data-screen="challenges">Challenges</button><button data-screen="calendar">Calendar</button><button data-screen="companion">Client mini app</button><button data-screen="privacy">Backup & privacy</button>
-<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v56 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
+<button data-screen="foodDiary">Food & hydration</button><button data-screen="clientCentre">Client centre</button><button data-screen="multiweek">Multiweek builder</button><button data-screen="exerciseAudit">Exercise audit</button><button data-screen="reviewCentre">Review centre</button><button data-screen="safetyCentre">Recovery centre</button><button data-screen="equipmentManager">Equipment manager</button><button data-screen="sessionReview">Workout review</button><button data-screen="coachReport">Coaching report</button><button data-screen="recovery45">Safety snapshots</button></nav><div class="update-strip no-print"><span>v57 · Free offline-first trainer app</span><button class="btn" id="checkUpdateNow">Check for update</button><button class="btn" data-go="privacy">Back up records</button><span id="updateCheckStatus" class="muted"></span></div>
 
 <section id="foodDiary" class="tabscreen"><div class="page-home-bar no-print"><button type="button" class="btn page-home-button" data-return-home="true">⌂ Back to main page</button></div>
 <div class="card"><h2>Food & hydration diary</h2><p class="muted">Optional, descriptive wellbeing diary. No calorie counts, body targets, food scoring or automatic nutrition judgements. Diary records are private unless a client chooses to export and share them.</p>
@@ -813,7 +813,7 @@ v49DbLoad().then(saved=>{
   // Do not replace live changes made while the database was opening.
   if(!v49InitialLoadFinished){state={...state,...saved.data};state.clientProgrammes=state.clientProgrammes||{};state.programmeHistory=state.programmeHistory||[];state.standaloneProgramme=state.standaloneProgramme||{sessions:[],notes:''};lastSavedProgramme=JSON.stringify({owner:state.planClient||'standalone',sessions:state.sessions,notes:state.notes});refreshClients();fillForm(activeClient());renderProgramme();renderLibrary();updateBuilder();updateStats();}
  }
-}).catch(()=>{}).finally(()=>{v49InitialLoadFinished=true});
+}).catch(()=>{}).finally(()=>{v49InitialLoadFinished=true;queueMicrotask(()=>{try{v57PopulateClients()}catch(e){console.error('Client selector refresh failed',e)}})});
 function id(){return 'c'+Date.now()+Math.random().toString(16).slice(2,6)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function activeClient(){return state.clients.find(c=>c.id===state.selected)}
@@ -1583,13 +1583,13 @@ function safeClientMiniPackage(){
  const cleanPlan=plan=>plan?{sessions:(plan.sessions||[]).map(cleanSession)}:null;
  const sessions=allSessions.map(cleanSession);
  const challenges=allChallenges.map(ch=>({id:String(ch.id||''),name:String(ch.name||''),type:String(ch.type||''),date:String(ch.date||''),target:String(ch.target||''),current:String(ch.current||''),plan:cleanPlan(ch.plan)}));
- return {foodDiarySettings:foodSettingsFor(cid),packageId:id(),clientToken:companionToken(c),clientName:$('companionDisplayName').value.trim()||c.firstName||'Client',sessions,challenges};
+ return {foodDiarySettings:(typeof foodSettingsFor==='function'?foodSettingsFor(cid):{}),packageId:id(),clientToken:companionToken(c),clientName:$('companionDisplayName').value.trim()||c.firstName||'Client',sessions,challenges};
 }
 $('companionPreview').onclick=()=>{
  try{
   const pkg=safeClientMiniPackage();
   $('companionPrivacyPreview').textContent='CLIENT MINI-APP EXPORT PREVIEW\nProgramme: '+($('v54CompanionProgramme').selectedOptions[0]?.textContent||'')+'\nName: '+pkg.clientName+'\nWorkouts: '+pkg.sessions.map(x=>x.name).join(', ')+'\nChallenges: '+pkg.challenges.map(x=>x.name+' — '+x.target+' by '+x.date+' (starting point: '+x.current+')').join(', ')+'\nExercise coaching notes: '+($('companionIncludeNotes').checked?'INCLUDED':'EXCLUDED')+'\n\nOnly these fields are exported: clientName, workout names, exercise names, sets, reps, rest, technique links, optional coaching notes, challenge name, type, target, deadline, starting point and challenge workout exercises. A package identifier and client matching token are also included. Review the displayed text for sensitive information before exporting.';
- }catch(e){alert(e.message)}
+ }catch(e){$('companionStatus').textContent='Preview failed: '+e.message;alert(e.message)}
 };
 function makeCompanionFile(){
  const pkg=safeClientMiniPackage();
@@ -2440,25 +2440,30 @@ for(const id of ['v53ProgrammeList','v53BuilderProgrammes']){
  if(el){const clone=el.cloneNode(false);clone.innerHTML=el.innerHTML;el.replaceWith(clone);clone.addEventListener('click',v55ListClick)}
 }
 // Keep the client dropdown independent from the programme editor and preserve selection.
-$('v54CompanionClient').onchange=()=>{
- const cid=$('v54CompanionClient').value;
+
+// v57: selectors are fully independent. Never invoke onchange from the renderer.
+function v57PopulateClients(){
+ const client=$('v54CompanionClient'),old=client.value;
+ const records=Array.isArray(state.clients)?state.clients:[];
+ client.innerHTML='<option value="">Choose a client</option>'+records.map(c=>`<option value="${esc(c.id)}">${esc([c.firstName,c.lastName].filter(Boolean).join(' ')||c.clientRef||'Unnamed client')}</option>`).join('');
+ const fallback=records.some(c=>c.id===state.selected)?state.selected:'';
+ client.value=records.some(c=>c.id===old)?old:fallback;
+ v57PopulatePlans();
+}
+function v57PopulatePlans(){
+ const cid=$('v54CompanionClient').value,psel=$('v54CompanionProgramme'),previous=psel.value;
  const plans=v54PlansFor(cid);
- const psel=$('v54CompanionProgramme');
- psel.innerHTML='<option value="">Choose a programme</option>'+plans.map(x=>`<option value="${esc(x.key)}">${esc(x.name||'Saved programme')} (${x.sessions.length} days)</option>`).join('');
- if(plans.length)psel.value=plans[0].key;
- $('v54CompanionHint').textContent=plans.length?'Choose the programme you want to send.':'No saved programmes for this client.';
-};
-const v55OriginalCompanionChoices=v54CompanionChoices;
-v54CompanionChoices=function(){
- const previous=$('v54CompanionClient').value;
- v55OriginalCompanionChoices();
- if(previous&&state.clients.some(c=>c.id===previous))$('v54CompanionClient').value=previous;
- $('v54CompanionClient').onchange();
-};
-$('v54CompanionProgramme').onchange=()=>{
- const cid=$('v54CompanionClient').value,selected=$('v54CompanionProgramme').value;
+ psel.innerHTML='<option value="">Choose a programme</option>'+plans.map(p=>`<option value="${esc(p.key)}">${esc(p.name||'Saved programme')} (${(p.sessions||[]).length} days)</option>`).join('');
+ const active=state.v53ActiveProgramme?.[cid];
+ psel.value=plans.some(p=>p.key===previous)?previous:(plans.some(p=>p.key===active)?active:(plans[0]?.key||''));
+ $('v54CompanionHint').textContent=!cid?'Choose a client to see their programmes.':plans.length?`${plans.length} programme(s) available. Choose one to preview or share.`:'No saved programme found for this client.';
  $('companionPrivacyPreview').textContent='';
- $('v54CompanionHint').textContent=selected?'Selected programme ready to preview.':'Choose a programme to send.';
+}
+v54CompanionChoices=v57PopulateClients;
+$('v54CompanionClient').onchange=v57PopulatePlans;
+$('v54CompanionProgramme').onchange=()=>{
+ $('companionPrivacyPreview').textContent='';
+ $('v54CompanionHint').textContent=$('v54CompanionProgramme').value?'Programme selected. Preview before sharing.':'Choose a programme.';
 };
 $('clientSelect').addEventListener('change',()=>{queueMicrotask(()=>{v53RenderProgrammes();v54CompanionChoices()})});
 

@@ -1,5 +1,5 @@
 {
-  "version": "56",
+  "version": "57",
   "release": "2026-11-09",
-  "features": "Simplified navigation, guided voice workout in Client Companion"
+  "features": "Rebuilt Client Companion client/programme selectors; refresh after saved data loads; preserve programme choice"
 }
