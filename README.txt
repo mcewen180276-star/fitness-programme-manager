@@ -41,3 +41,5 @@ V13: Every exercise shown in programme creator, exercise database, swap results,
 V14: Workout Mode now displays an immediately visible demo button and expanded setup, execution, return, breathing and safety instructions for every exercise. Resolve saved programme exercise guidance against updated library; add more movement-specific fallback families. Cache version bumped and service worker changed to network-first for online updates. Generic guidance is not a substitute for exercise-specific expert verification.
 
 V15: manual programme creation with empty days; copy one day into another; save day into reusable library, use it in any programme; correct day name/style save action. Saved day library persists in existing IndexedDB and JSON backups. Existing approved programmes unchanged until explicitly saved.
+
+V16: Print font size selector Normal/Large/Extra large; every day begins a new printed A4 page; share selected client mini-app HTML via native file sharing with download fallback. A standalone HTML attachment is not an installable PWA: for reliable home-screen shortcuts host client HTML over HTTPS.
