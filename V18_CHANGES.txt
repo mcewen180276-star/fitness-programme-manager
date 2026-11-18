@@ -1,0 +1,1 @@
+V18 adds two export choices to the existing Mini-App screen: Download HTML document (same standalone HTML) and Download mini-app ZIP (index.html and READ_ME_FIRST.txt). Existing HTML download, HTML sharing, and client link controls are retained. ZIP creation is local, with no external libraries or uploads. Client data storage is unchanged.

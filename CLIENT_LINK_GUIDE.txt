@@ -1,0 +1,10 @@
+V17 CLIENT LINK GUIDE
+
+1. Host the main app on GitHub Pages (https://...).
+2. In Mini-App, choose a client and tick approved programmes.
+3. Press Prepare client link. The browser downloads a client-<unique-id>.html file and displays its proposed URL.
+4. In the SAME GitHub Pages repository, create a folder named client-apps and upload the downloaded HTML into it. Commit.
+5. Wait for publishing, then use Test link to verify. Share the link with the client.
+6. Client opens the HTTPS link in Chrome on Android, taps the three-dot menu, then Add to Home screen.
+
+PRIVACY: GitHub Pages is public. Anyone with the link can view the programme. Do not include sensitive personal/health information. This does not provide access control, client accounts, automatic syncing or private hosting. Records saved in the mini-app stay on the client device. If programme changes, export/upload a new file and share its new link.
