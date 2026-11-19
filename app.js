@@ -428,23 +428,23 @@ function recordCardDocument(p){
  const weeks=Math.max(1,Math.min(52,Number(recordWeeks)||6));
  const perSheet=Math.max(1,Math.min(4,Number(recordWeeksPerSheet)||2));
  const pages=[];
- // Each week-range is continuous: a day may end midway down a half-page,
- // and the next day starts directly below it. Exercises are indivisible.
+ // One workout day per physical landscape sheet. Continue only that day on a new sheet.
+ // Each exercise and all its sets are one indivisible group.
  for(let start=1;start<=weeks;start+=perSheet){
   const ws=Array.from({length:Math.min(perSheet,weeks-start+1)},(_,i)=>start+i);
-  const heads=ws.map(w=>`<th>WEEK ${w}<small>Date: _______</small></th>`).join('');
-  const maxHeight=171; // mm available below page heading/table header and above notes
-  let chunk=[],used=0,firstDay=null,lastDay=null,part=0;
-  const push=()=>{
-   if(!chunk.length)return;
-   part++;
-   const dayLabel=firstDay===lastDay?`Day ${firstDay+1}`:`Days ${firstDay+1}–${lastDay+1}`;
-   pages.push(`<section class="record-page"><div class="record-page-head"><div><b>WORKOUT RECORD</b><h2>${esc(dayLabel)}</h2><span>${esc(c?.name||'Client')} · ${esc(p.name)}</span></div><div class="record-page-period">WEEKS ${ws[0]}–${ws[ws.length-1]} OF ${weeks}<br>PAGE ${part}</div></div><table class="record-grid"><colgroup><col style="width:15%"><col style="width:23%">${ws.map(()=>'<col>').join('')}</colgroup><thead><tr><th>SET</th><th>TARGET</th>${heads}</tr></thead>${chunk.join('')}</table><div class="record-page-notes">Session notes: ${ws.map(w=>`Week ${w}: __________`).join(' &nbsp; ')}</div></section>`);
-   chunk=[];used=0;firstDay=null;lastDay=null;
-  };
+  const heads=ws.map(w=>`<th>WEEK ${w}<small>Date: ____________</small></th>`).join('');
   for(const [di,day] of p.days.entries()){
    if(!day.exercises?.length)continue;
-   let newDay=true;
+   let chunk=[],used=0,part=0;
+   // A4 landscape printable height 194mm. 27mm heading + 12mm table header + 12mm notes.
+   // Keep extra margin to avoid browser/printer pagination differences.
+   const maxHeight=135;
+   const push=()=>{
+    if(!chunk.length)return;
+    part++;
+    pages.push(`<section class="record-landscape-page"><div class="record-landscape-head"><div><b>WORKOUT RECORD</b><h2>Day ${di+1} — ${esc(day.name)}${part>1?' (continued)':''}</h2><span>${esc(c?.name||'Client')} · ${esc(p.name)} · ${esc(day.style||'Mixed')}</span></div><div class="record-landscape-period">WEEKS ${ws[0]}–${ws[ws.length-1]} OF ${weeks}<br>Sheet ${part}</div></div><table class="record-landscape-table"><colgroup><col style="width:16%"><col style="width:22%">${ws.map(()=>'<col>').join('')}</colgroup><thead><tr><th>EXERCISE / SET</th><th>TARGET</th>${heads}</tr></thead>${chunk.join('')}</table><div class="record-landscape-notes">Session notes: ${ws.map(w=>`Week ${w}: ______________________________`).join(' &nbsp; ')}</div></section>`);
+    chunk=[];used=0;
+   };
    for(const x of day.exercises){
     const cardio=cardioExercise(x),warm=warmupInfo(x);
     const sets=Math.max(1,Math.min(8,numberOfSets(x.sets)));
@@ -452,29 +452,17 @@ function recordCardDocument(p){
     const lines=[];
     for(let i=1;i<=warmSets;i++)lines.push({label:`Warm-up ${i}`,target:`${esc(x.warmupReps||'16–20')} reps · ${esc(x.warmupWeight||'Light')}`,cardio:false});
     for(let i=1;i<=sets;i++)lines.push({label:cardio?`Round ${i}`:`Set ${i}`,target:cardio?`${cardioTimeLabel(x)} total`:`${esc(x.reps||'—')} reps${x.weight?' · '+esc(x.weight)+' kg':''}`,cardio});
-    const exerciseHead=`<tr class="record-exercise-name"><td colspan="${2+ws.length}">${esc(x.name)}${x.instructorNote?` <span class="record-note">· ${esc(x.instructorNote)}</span>`:''}</td></tr>`;
-    const body=lines.map(l=>`<tr class="record-set-row"><td>${l.label}</td><td>${l.target}</td>${ws.map(()=>`<td class="record-entry"><div>${l.cardio?'Time':'Reps'}: <span class="record-line"></span></div><div>${l.cardio?'Distance':'Weight'}: <span class="record-line"></span></div></td>`).join('')}</tr>`).join('');
-    const groupHeight=5.8+lines.length*7.8;
-    const headingHeight=newDay?8:0;
-    // If it will not fit, start the whole exercise on the next half-page.
-    if(chunk.length&&used+headingHeight+groupHeight>maxHeight){push(); if(!newDay){newDay='continued';}}
-    if(firstDay===null)firstDay=di;
-    lastDay=di;
-    if(newDay){
-     chunk.push(`<tbody class="record-day-heading"><tr><td colspan="${2+ws.length}"><strong>DAY ${di+1} — ${esc(day.name)}${newDay==='continued'?' (continued)':''}</strong> <span>${esc(day.style||'Mixed')}</span></td></tr></tbody>`);
-     used+=8;
-     newDay=false;
-    }
-    chunk.push(`<tbody class="record-exercise-group">${exerciseHead}${body}</tbody>`);
+    const head=`<tr class="record-exercise-name"><td colspan="${2+ws.length}">${esc(x.name)}${x.instructorNote?` <span class="record-note">· ${esc(x.instructorNote)}</span>`:''}</td></tr>`;
+    const rows=lines.map(l=>`<tr class="record-set-row"><td>${l.label}</td><td>${l.target}</td>${ws.map(()=>`<td class="record-entry"><div>${l.cardio?'Time':'Reps'}: <span class="record-line"></span></div><div>${l.cardio?'Distance':'Weight'}: <span class="record-line"></span></div></td>`).join('')}</tr>`).join('');
+    const groupHeight=7+lines.length*12;
+    if(chunk.length&&used+groupHeight>maxHeight)push();
+    chunk.push(`<tbody class="record-exercise-group">${head}${rows}</tbody>`);
     used+=groupHeight;
    }
+   push();
   }
-  push();
  }
- if(!pages.length)return '<p>No exercises in this programme.</p>';
- const spreads=[];
- for(let i=0;i<pages.length;i+=2)spreads.push(`<div class="record-spread">${pages[i]}${pages[i+1]||'<div class="record-page record-blank"></div>'}</div>`);
- return `<div class="record-card record-booklet">${spreads.join('')}</div>`;
+ return pages.length?`<div class="record-card record-landscape">${pages.join('')}</div>`:'<p>No exercises in this programme.</p>';
 }
 function viewEdit(){const p=current();return `<h2 class="no-print">Edit & Print</h2><div class="panel no-print"><div class="row">${clientPick()}${programmePick()}<label>Print format<select id="printLayout"><option value="detailed" ${printLayout==='detailed'?'selected':''}>Detailed programme</option><option value="record" ${printLayout==='record'?'selected':''}>Blank workout record card</option></select></label>${printLayout==='record'?`<label>Programme duration<select id="recordWeeks">${[1,2,3,4,5,6,8,10,12,16,20,24,26,52].map(n=>`<option value="${n}" ${recordWeeks===n?'selected':''}>${n} week${n===1?'':'s'}</option>`).join('')}</select></label><label>Weeks per printed sheet<select id="recordWeeksPerSheet">${[1,2,3,4].map(n=>`<option value="${n}" ${recordWeeksPerSheet===n?'selected':''}>${n}</option>`).join('')}</select></label>`:''}<label>Print text size<select id="printFontSize"><option value="normal" ${printFontSize==='normal'?'selected':''}>Normal</option><option value="large" ${printFontSize==='large'?'selected':''}>Large</option><option value="extra" ${printFontSize==='extra'?'selected':''}>Extra large</option></select></label><button data-action="print" class="primary" ${!p?'disabled':''}>Print / Save as PDF</button></div><p class="muted">Professional print layout: select “Save as PDF” in your phone's print menu.</p></div>${!p?'<p>Select an approved programme.</p>':`<div id="printArea" class="print-size-${printFontSize}">${printLayout==='record'?recordCardDocument(p):printDocument(p)}</div><div class="panel no-print"><button data-action="editApproved" class="primary">Edit this programme in Creator</button><button data-action="renameApproved">Rename / change date</button></div>`}`}
 function viewWorkout(){const p=current();return `<h2>Workout Mode</h2><div class="panel no-print"><div class="row">${clientPick()}${programmePick()}</div></div>${!p?'<p>Choose an approved programme.</p>':`<div class="panel no-print">${p.trainingTargets?.length?`<p><b>Training targets:</b> ${p.trainingTargets.map(t=>`${esc(t.name)} ${t.low}–${t.high} bpm`).join(' · ')}</p>`:''}${p.calculatorNotes?.length?`<details><summary>Calculator notes</summary>${p.calculatorNotes.map(t=>`<p>${esc(t.title)}: ${esc(t.summary)}</p>`).join('')}</details>`:''}<label>Workout day</label><select id="workoutDay">${p.days.map((d,i)=>`<option value="${i}">${esc(d.name)}</option>`).join('')}</select><div id="workoutItems"></div><button class="primary" data-action="recordWorkout">Save workout record</button></div>`}`}
