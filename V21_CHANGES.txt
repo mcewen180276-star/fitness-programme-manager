@@ -1,0 +1,1 @@
+V21: Cardio total time on printouts; instructor notes per exercise; printable blank workout record cards. Permanent client filenames/links from V20 retained. Back up client data before updating.
