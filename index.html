@@ -110,5 +110,16 @@
  .record-booklet .record-grid .record-entry{font-size:7pt!important;line-height:1.45!important}
  .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
 }
+/* V27: fill each half-sheet with a full day where it fits, without splitting exercises. */
+@media print{
+ .record-booklet .record-page{padding:2.5mm!important;}
+ .record-booklet .record-page-head{margin-bottom:2mm!important;padding-bottom:1mm!important;}
+ .record-booklet .record-grid th,.record-booklet .record-grid td{padding:1mm 1.2mm!important;}
+ .record-booklet .record-grid .record-set-row td{height:8mm!important;}
+ .record-booklet .record-grid .record-exercise-name td{padding:1mm 1.2mm!important;}
+ .record-booklet .record-grid .record-entry{font-size:6.8pt!important;line-height:1.2!important;}
+ .record-booklet .record-page-notes{margin-top:2mm!important;}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important;}
+}
 </style>
-</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=26"></script></body></html>
+</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=27"></script></body></html>

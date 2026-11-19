@@ -1,0 +1,1 @@
+V27: Foldable A4 landscape record cards. Packs exercise groups more densely into each portrait half-page, keeping complete exercises together. Prints Day 1, Day 2 etc. within each week range, then repeats for the next week range. Existing client mini-app and permanent client links unchanged.
