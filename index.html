@@ -198,4 +198,32 @@
  .record-fold-table .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
 }
 </style>
+
+<style id="record-a4-v31">
+.record-a4-page{box-sizing:border-box;background:#fff;border:1px solid #cad4df;padding:14px;margin:14px 0;width:100%;color:#172c40}
+.record-a4-head{display:flex;justify-content:space-between;align-items:start;gap:12px;border-bottom:2px solid #173b64;padding-bottom:7px;margin-bottom:8px}
+.record-a4-head h2{font-size:18px;margin:2px 0}.record-a4-head b,.record-a4-head span,.record-a4-head>div:last-child{font-size:10px}
+.record-a4-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:10px}
+.record-a4-table td,.record-a4-table th{border:1px solid #b8c7d7;padding:3px 4px;overflow-wrap:anywhere}
+.record-a4-table th{background:#173b64;color:#fff;text-align:left}
+.record-a4-table th small{display:block;font-weight:normal}
+.record-a4-table .record-exercise-name td{background:#e8f0f8;color:#173b64;font-weight:700}
+.record-a4-table .record-entry>div{display:flex;gap:4px;align-items:baseline}
+.record-a4-table .record-line{flex:1;border-bottom:1px solid #94a2b2;min-width:5px}
+.record-a4-notes{font-size:9px;margin-top:7px}
+@media print{
+ @page{size:A4 portrait;margin:8mm}
+ body:has(.record-a4) #printArea{position:static!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+ .record-a4-page{box-sizing:border-box!important;width:194mm!important;height:281mm!important;max-height:281mm!important;padding:2mm!important;margin:0!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important;overflow:hidden!important}
+ .record-a4-page:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-a4-head{margin-bottom:2mm!important;padding-bottom:1mm!important}
+ .record-a4-head h2{font-size:12pt!important}
+ .record-a4-table{font-size:var(--record-pt)!important}
+ .record-a4-table th,.record-a4-table td{padding:.55mm 1mm!important}
+ .record-a4-table .record-set-row td{height:var(--row-mm)!important}
+ .record-a4-table .record-entry>div{line-height:1.05!important}
+ .record-a4-table .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-a4-table th,.record-a4-table .record-exercise-name td{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+</style>
 </head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=30"></script></body></html>
