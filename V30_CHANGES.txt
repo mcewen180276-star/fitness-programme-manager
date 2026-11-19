@@ -1,0 +1,1 @@
+V30: Two portrait record halves per A4 landscape sheet. Each day begins on its own half-page, no mixing days within a half-page. A day that continues takes the next half; 3 or 4 weeks can be selected per record page. Warm-up and working sets remain grouped. Existing mini-app and client-link code unchanged.
