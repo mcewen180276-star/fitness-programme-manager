@@ -80,4 +80,33 @@
  .record-card .record-grid .record-exercise-name td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
-</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=23"></script></body></html>
+
+<style id="record-two-up-v25">
+/* Two record cards per A4 page; no exercise group may break between cards. */
+.record-two-up .record-print-sheet{display:flex;flex-direction:column;gap:8px;margin:0 0 20px}
+.record-two-up .record-page{box-sizing:border-box;min-height:0!important;margin:0!important;padding:9px!important;break-before:auto!important;page-break-before:auto!important}
+.record-two-up .record-page-head{margin-bottom:5px;padding-bottom:5px}
+.record-two-up .record-page-head h2{font-size:15px}
+.record-two-up .record-page-head b,.record-two-up .record-page-head span,.record-two-up .record-page-period{font-size:9px}
+.record-two-up .record-grid{font-size:10px!important}
+.record-two-up .record-grid th,.record-two-up .record-grid td{padding:3px 4px!important}
+.record-two-up .record-grid th small{font-size:8px;margin-top:2px}
+.record-two-up .record-grid .record-set-row td{height:24px!important}
+.record-two-up .record-grid .record-entry{font-size:9px;line-height:1.25}
+.record-two-up .record-grid .record-line{height:7px}
+.record-two-up .record-grid .record-exercise-name td{padding:3px 4px!important}
+.record-two-up .record-page-notes{font-size:9px;margin-top:5px}
+.record-two-up .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+@media print{
+ @page{size:A4 portrait;margin:8mm}
+ .record-two-up .record-print-sheet{height:281mm!important;max-height:281mm!important;display:flex!important;flex-direction:column!important;gap:2mm!important;margin:0!important;break-after:page!important;page-break-after:always!important;overflow:hidden!important}
+ .record-two-up .record-print-sheet:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-two-up .record-page{height:139.5mm!important;max-height:139.5mm!important;flex:0 0 139.5mm!important;overflow:hidden!important;padding:3mm!important;border:1px solid #b8c6d6!important;break-before:auto!important;page-break-before:auto!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-two-up .record-grid{font-size:8pt!important}
+ .record-two-up .record-grid th,.record-two-up .record-grid td{padding:2px 3px!important}
+ .record-two-up .record-grid .record-set-row td{height:7mm!important}
+ .record-two-up .record-grid .record-entry{font-size:7pt!important;line-height:1.2!important}
+ .record-two-up .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+</style>
+</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V25 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=25"></script></body></html>

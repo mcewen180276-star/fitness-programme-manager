@@ -1,0 +1,1 @@
+V24: Cardio time uses numeric totalTime, falling back to numeric duration; avoids printing placeholders such as Specified min. Total cardio time input is numeric. Existing programmes with no numeric time must be edited and saved.
