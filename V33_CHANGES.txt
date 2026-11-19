@@ -1,0 +1,1 @@
+V33: Record cards print from a clean dedicated A4 document, isolated from older conflicting app print styles. One day per page; each table expands to use available page height. Week selection preserved. Main app and client mini-app unchanged.
