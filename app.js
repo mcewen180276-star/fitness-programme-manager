@@ -428,12 +428,23 @@ function recordCardDocument(p){
  const weeks=Math.max(1,Math.min(52,Number(recordWeeks)||6));
  const perSheet=Math.max(1,Math.min(4,Number(recordWeeksPerSheet)||2));
  const pages=[];
- // Print in chronological order: Day 1, Day 2, etc. for each week range.
+ // Each week-range is continuous: a day may end midway down a half-page,
+ // and the next day starts directly below it. Exercises are indivisible.
  for(let start=1;start<=weeks;start+=perSheet){
   const ws=Array.from({length:Math.min(perSheet,weeks-start+1)},(_,i)=>start+i);
   const heads=ws.map(w=>`<th>WEEK ${w}<small>Date: _______</small></th>`).join('');
+  const maxHeight=171; // mm available below page heading/table header and above notes
+  let chunk=[],used=0,firstDay=null,lastDay=null,part=0;
+  const push=()=>{
+   if(!chunk.length)return;
+   part++;
+   const dayLabel=firstDay===lastDay?`Day ${firstDay+1}`:`Days ${firstDay+1}–${lastDay+1}`;
+   pages.push(`<section class="record-page"><div class="record-page-head"><div><b>WORKOUT RECORD</b><h2>${esc(dayLabel)}</h2><span>${esc(c?.name||'Client')} · ${esc(p.name)}</span></div><div class="record-page-period">WEEKS ${ws[0]}–${ws[ws.length-1]} OF ${weeks}<br>PAGE ${part}</div></div><table class="record-grid"><colgroup><col style="width:15%"><col style="width:23%">${ws.map(()=>'<col>').join('')}</colgroup><thead><tr><th>SET</th><th>TARGET</th>${heads}</tr></thead>${chunk.join('')}</table><div class="record-page-notes">Session notes: ${ws.map(w=>`Week ${w}: __________`).join(' &nbsp; ')}</div></section>`);
+   chunk=[];used=0;firstDay=null;lastDay=null;
+  };
   for(const [di,day] of p.days.entries()){
-   const groups=[];
+   if(!day.exercises?.length)continue;
+   let newDay=true;
    for(const x of day.exercises){
     const cardio=cardioExercise(x),warm=warmupInfo(x);
     const sets=Math.max(1,Math.min(8,numberOfSets(x.sets)));
@@ -441,24 +452,24 @@ function recordCardDocument(p){
     const lines=[];
     for(let i=1;i<=warmSets;i++)lines.push({label:`Warm-up ${i}`,target:`${esc(x.warmupReps||'16–20')} reps · ${esc(x.warmupWeight||'Light')}`,cardio:false});
     for(let i=1;i<=sets;i++)lines.push({label:cardio?`Round ${i}`:`Set ${i}`,target:cardio?`${cardioTimeLabel(x)} total`:`${esc(x.reps||'—')} reps${x.weight?' · '+esc(x.weight)+' kg':''}`,cardio});
-    const name=`<tr class="record-exercise-name"><td colspan="${2+ws.length}">${esc(x.name)}${x.instructorNote?` <span class="record-note">· ${esc(x.instructorNote)}</span>`:''}</td></tr>`;
+    const exerciseHead=`<tr class="record-exercise-name"><td colspan="${2+ws.length}">${esc(x.name)}${x.instructorNote?` <span class="record-note">· ${esc(x.instructorNote)}</span>`:''}</td></tr>`;
     const body=lines.map(l=>`<tr class="record-set-row"><td>${l.label}</td><td>${l.target}</td>${ws.map(()=>`<td class="record-entry"><div>${l.cardio?'Time':'Reps'}: <span class="record-line"></span></div><div>${l.cardio?'Distance':'Weight'}: <span class="record-line"></span></div></td>`).join('')}</tr>`).join('');
-    // Estimate printed heights based on the compact 8 mm row style below.
-    // One exercise group is never split between half-pages.
-    groups.push({html:`<tbody class="record-exercise-group">${name}${body}</tbody>`,mm:6+lines.length*8.2});
+    const groupHeight=5.8+lines.length*7.8;
+    const headingHeight=newDay?8:0;
+    // If it will not fit, start the whole exercise on the next half-page.
+    if(chunk.length&&used+headingHeight+groupHeight>maxHeight){push(); if(!newDay){newDay='continued';}}
+    if(firstDay===null)firstDay=di;
+    lastDay=di;
+    if(newDay){
+     chunk.push(`<tbody class="record-day-heading"><tr><td colspan="${2+ws.length}"><strong>DAY ${di+1} — ${esc(day.name)}${newDay==='continued'?' (continued)':''}</strong> <span>${esc(day.style||'Mixed')}</span></td></tr></tbody>`);
+     used+=8;
+     newDay=false;
+    }
+    chunk.push(`<tbody class="record-exercise-group">${exerciseHead}${body}</tbody>`);
+    used+=groupHeight;
    }
-   // Usable height: 194mm half-page minus 8mm padding, ~19mm heading,
-   // ~9mm table header and ~8mm notes = roughly 150mm.
-   const MAX_MM=151;
-   let chunk=[],used=0,part=1;
-   const push=()=>{
-    if(!chunk.length)return;
-    pages.push(`<section class="record-page"><div class="record-page-head"><div><b>WORKOUT RECORD</b><h2>${esc(day.name)}</h2><span>${esc(c?.name||'Client')} · ${esc(p.name)}</span></div><div class="record-page-period">WEEKS ${ws[0]}–${ws[ws.length-1]} OF ${weeks}<br>DAY ${di+1}${part>1?' · CONTINUED':''}</div></div><table class="record-grid"><colgroup><col style="width:15%"><col style="width:23%">${ws.map(()=>'<col>').join('')}</colgroup><thead><tr><th>SET</th><th>TARGET</th>${heads}</tr></thead>${chunk.join('')}</table><div class="record-page-notes">Session notes: ${ws.map(w=>`Week ${w}: __________`).join(' &nbsp; ')}</div></section>`);
-    chunk=[];used=0;part++;
-   };
-   for(const group of groups){if(chunk.length&&used+group.mm>MAX_MM)push();chunk.push(group.html);used+=group.mm;}
-   push();
   }
+  push();
  }
  if(!pages.length)return '<p>No exercises in this programme.</p>';
  const spreads=[];

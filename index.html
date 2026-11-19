@@ -122,4 +122,17 @@
  .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important;}
 }
 </style>
-</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=27"></script></body></html>
+
+<style id="record-booklet-v28">
+/* Continuous chronological layout: Day 2 can start below Day 1 on the same half-page. */
+.record-booklet .record-day-heading td{background:#d7e4f1!important;color:#153b62!important;font-weight:750!important;padding:5px 6px!important;border-top:2px solid #6f91b2!important}
+.record-booklet .record-day-heading span{font-size:.82em;color:#52647a;margin-left:5px}
+@media print{
+ .record-booklet .record-day-heading td{padding:1.2mm!important;font-size:8pt!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .record-booklet .record-page{height:194mm!important;max-height:194mm!important;overflow:hidden!important}
+ .record-booklet .record-grid .record-set-row td{height:7.8mm!important}
+ .record-booklet .record-page-head h2{font-size:11pt!important}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+</style>
+</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=28"></script></body></html>
