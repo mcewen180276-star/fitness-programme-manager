@@ -80,4 +80,122 @@
  .record-card .record-grid .record-exercise-name td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
-</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=24"></script></body></html>
+<style id="record-booklet-v26">
+/* Booklet: two original-style portrait cards on each landscape A4 sheet. */
+.record-booklet .record-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin:12px 0;padding:8px;background:#e8edf3;border-radius:8px}
+.record-booklet .record-page{box-sizing:border-box;min-width:0;max-width:none;width:100%;margin:0;padding:9px;background:white;border:1px solid #c4cfda;break-before:auto;page-break-before:auto}
+.record-booklet .record-page-head{gap:5px;margin-bottom:6px;padding-bottom:5px}
+.record-booklet .record-page-head h2{font-size:14px;margin:2px 0}
+.record-booklet .record-page-head b,.record-booklet .record-page-head span,.record-booklet .record-page-period{font-size:8px}
+.record-booklet .record-grid{font-size:9px!important;table-layout:fixed;width:100%!important;border-collapse:collapse}
+.record-booklet .record-grid th,.record-booklet .record-grid td{padding:3px 4px!important;font-size:9px;overflow-wrap:anywhere}
+.record-booklet .record-grid th small{font-size:7px}
+.record-booklet .record-grid .record-exercise-name td{padding:4px!important}
+.record-booklet .record-grid .record-set-row td{height:31px!important}
+.record-booklet .record-grid .record-entry{font-size:8px;line-height:1.6}
+.record-booklet .record-grid .record-entry>div{gap:2px}
+.record-booklet .record-grid .record-line{min-width:5px;height:7px}
+.record-booklet .record-page-notes{font-size:8px;margin-top:6px}
+.record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-booklet) #printArea{position:static!important;width:100%!important}
+ .record-booklet .record-spread{box-sizing:border-box;display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;width:281mm!important;height:194mm!important;margin:0!important;padding:0!important;background:white!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-booklet .record-spread:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-booklet .record-page{box-sizing:border-box!important;width:140.5mm!important;height:194mm!important;max-height:194mm!important;padding:4mm!important;border:0!important;margin:0!important;overflow:hidden!important;break-before:auto!important;page-break-before:auto!important;break-after:auto!important;page-break-after:auto!important}
+ .record-booklet .record-page:first-child{border-right:1px dashed #b8c3ce!important}
+ .record-booklet .record-grid{font-size:8pt!important}
+ .record-booklet .record-grid th,.record-booklet .record-grid td{padding:2px 3px!important;font-size:8pt!important}
+ .record-booklet .record-grid .record-set-row td{height:10mm!important}
+ .record-booklet .record-grid .record-entry{font-size:7pt!important;line-height:1.45!important}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+/* V27: fill each half-sheet with a full day where it fits, without splitting exercises. */
+@media print{
+ .record-booklet .record-page{padding:2.5mm!important;}
+ .record-booklet .record-page-head{margin-bottom:2mm!important;padding-bottom:1mm!important;}
+ .record-booklet .record-grid th,.record-booklet .record-grid td{padding:1mm 1.2mm!important;}
+ .record-booklet .record-grid .record-set-row td{height:8mm!important;}
+ .record-booklet .record-grid .record-exercise-name td{padding:1mm 1.2mm!important;}
+ .record-booklet .record-grid .record-entry{font-size:6.8pt!important;line-height:1.2!important;}
+ .record-booklet .record-page-notes{margin-top:2mm!important;}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important;}
+}
+</style>
+
+<style id="record-booklet-v28">
+/* Continuous chronological layout: Day 2 can start below Day 1 on the same half-page. */
+.record-booklet .record-day-heading td{background:#d7e4f1!important;color:#153b62!important;font-weight:750!important;padding:5px 6px!important;border-top:2px solid #6f91b2!important}
+.record-booklet .record-day-heading span{font-size:.82em;color:#52647a;margin-left:5px}
+@media print{
+ .record-booklet .record-day-heading td{padding:1.2mm!important;font-size:8pt!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .record-booklet .record-page{height:194mm!important;max-height:194mm!important;overflow:hidden!important}
+ .record-booklet .record-grid .record-set-row td{height:7.8mm!important}
+ .record-booklet .record-page-head h2{font-size:11pt!important}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+</style>
+
+<style id="record-landscape-v29">
+.record-landscape .record-landscape-page{box-sizing:border-box;background:#fff;border:1px solid #c9d4e1;padding:12px 14px;margin:12px 0;max-width:100%;}
+.record-landscape .record-landscape-head{display:flex;justify-content:space-between;gap:16px;border-bottom:2px solid #173b64;margin-bottom:10px;padding-bottom:7px}
+.record-landscape .record-landscape-head b{font-size:11px;letter-spacing:.12em;color:#365d7f}
+.record-landscape .record-landscape-head h2{font-size:21px;margin:3px 0}
+.record-landscape .record-landscape-head span,.record-landscape .record-landscape-period{font-size:12px;color:#455b70}
+.record-landscape .record-landscape-period{text-align:right;flex-shrink:0}
+.record-landscape .record-landscape-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px}
+.record-landscape .record-landscape-table th,.record-landscape .record-landscape-table td{border:1px solid #b9c8d8;padding:5px 7px;vertical-align:middle;overflow-wrap:anywhere}
+.record-landscape .record-landscape-table th{background:#173b64;color:white;text-align:left}
+.record-landscape .record-landscape-table th small{display:block;font-weight:normal;font-size:10px;margin-top:4px}
+.record-landscape .record-exercise-name td{background:#e8f0f8;font-weight:bold;color:#173b64}
+.record-landscape .record-set-row td{height:42px}
+.record-landscape .record-entry{font-size:11px}
+.record-landscape .record-entry>div{display:flex;align-items:baseline;gap:8px;line-height:1.9}
+.record-landscape .record-line{flex:1;border-bottom:1px solid #8496a9;height:12px}
+.record-landscape .record-landscape-notes{font-size:11px;margin-top:10px}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-landscape) #printArea{position:static!important;width:100%!important}
+ .record-landscape .record-landscape-page{box-sizing:border-box!important;width:281mm!important;max-width:281mm!important;min-height:0!important;height:auto!important;margin:0!important;padding:3mm!important;border:0!important;break-before:page!important;page-break-before:always!important;break-after:auto!important;overflow:visible!important}
+ .record-landscape .record-landscape-page:first-child{break-before:auto!important;page-break-before:auto!important}
+ .record-landscape .record-landscape-table{font-size:10pt!important}
+ .record-landscape .record-landscape-table th,.record-landscape .record-landscape-table td{padding:1.5mm 2mm!important}
+ .record-landscape .record-set-row td{height:12mm!important}
+ .record-landscape .record-entry{font-size:9pt!important}
+ .record-landscape .record-entry>div{line-height:1.8!important}
+ .record-landscape .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-landscape .record-landscape-table th,.record-landscape .record-exercise-name td{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+}
+</style>
+
+<style id="record-fold-v30">
+.record-fold-spread{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;background:white;border:1px solid #b9c8d8}
+.record-fold-page{box-sizing:border-box;min-width:0;padding:10px;border-right:1px dashed #aebac7;background:#fff}
+.record-fold-page:last-child{border-right:0}
+.record-fold-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;border-bottom:2px solid #173b64;padding-bottom:4px}
+.record-fold-head b{font-size:9px;letter-spacing:.08em}.record-fold-head h2{font-size:15px;margin:2px 0}.record-fold-head span,.record-fold-period{font-size:9px}
+.record-fold-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:9px}
+.record-fold-table th,.record-fold-table td{border:1px solid #b9c8d8;padding:3px;overflow-wrap:anywhere}
+.record-fold-table th{background:#173b64;color:white;text-align:left}.record-fold-table th small{display:block;font-size:8px}
+.record-fold-table .record-exercise-name td{background:#e8f0f8;color:#173b64;font-weight:bold}
+.record-fold-table .record-set-row td{height:27px}.record-fold-table .record-entry{font-size:8px}
+.record-fold-table .record-entry>div{display:flex;gap:3px;align-items:baseline;line-height:1.35}
+.record-fold-table .record-line{flex:1;border-bottom:1px solid #8a9bac;height:6px}
+.record-fold-notes{font-size:8px;margin-top:6px}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-fold) #printArea{position:static!important;width:100%!important}
+ .record-fold-spread{box-sizing:border-box!important;display:grid!important;grid-template-columns:1fr 1fr!important;width:281mm!important;height:194mm!important;margin:0!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-fold-spread:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-fold-page{box-sizing:border-box!important;width:140.5mm!important;height:194mm!important;max-height:194mm!important;padding:3mm!important;overflow:hidden!important;border:0!important;break-inside:avoid!important}
+ .record-fold-page:first-child{border-right:1px dashed #aebac7!important}
+ .record-fold-table{font-size:8pt!important}
+ .record-fold-table th,.record-fold-table td{padding:1mm!important}
+ .record-fold-table .record-set-row td{height:8.2mm!important}
+ .record-fold-table .record-entry{font-size:7pt!important}
+ .record-fold-table .record-entry>div{line-height:1.25!important}
+ .record-fold-table th,.record-fold-table .record-exercise-name td{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .record-fold-table .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+</style>
+</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=30"></script></body></html>
