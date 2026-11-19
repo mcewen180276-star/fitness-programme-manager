@@ -1,0 +1,1 @@
+V22: Multi-week printable workout record cards. Warm-up sets included as separate recordable rows. Choose programme duration (1-52 weeks) and weeks per sheet (1-4) in Edit & Print. Each workout day and week group starts a new printed sheet. Existing programme data and mini-app features preserved.
