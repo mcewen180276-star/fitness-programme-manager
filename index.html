@@ -23,4 +23,61 @@
 
 .report-instructor-note{margin-top:7px;padding:6px;border-left:3px solid #2967a2;font-size:.88em}.record-write-line{padding:9px 0;border-bottom:1px solid #9aa8b7;white-space:nowrap}.record-extra{font-size:.82em;margin:15px 0}.record-card .report-table th:nth-child(1){width:30%}.record-card .report-table th:nth-child(2){width:26%}.record-card .report-table th:nth-child(3){width:44%}@media print{.record-card .record-write-line{padding:9px 0}.record-card .report-table tr{break-inside:avoid}}
 .record-week-table th:first-child{width:12%}.record-week-table th:nth-child(2){width:23%}.record-week-table th:nth-child(n+3){width:auto}.record-week-table td{padding:7px 6px;font-size:.85em}.record-week-table .record-exercise-name td{background:#edf3f9;padding:8px 7px}.record-week-table .record-write{line-height:2.1;color:#667486}.record-week-table .record-target{font-size:.85em}.record-date-line{font-size:.75em;margin-top:5px}.record-note{font-size:.85em;font-weight:normal}.record-week-sheet{break-before:page;page-break-before:always}.record-week-sheet:first-of-type{break-before:page}.record-week-table tr{break-inside:avoid;page-break-inside:avoid}@media print{.record-week-table th{padding:7px 5px}.record-week-table td{padding:6px 5px}.record-week-table .record-write{line-height:1.9}.record-week-sheet{margin:0}}
-</style></head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=22"></script></body></html>
+
+/* V22.1: record card layout fixes, override older generic three-column widths */
+.record-card .record-week-table{width:100%;max-width:100%;table-layout:fixed;border-collapse:collapse}
+.record-card .record-week-table th:nth-child(1){width:14%}
+.record-card .record-week-table th:nth-child(2){width:22%}
+.record-card .record-week-table th:nth-child(n+3){width:auto}
+.record-card .record-week-table th,.record-card .record-week-table td{box-sizing:border-box;overflow-wrap:break-word;word-break:normal;white-space:normal}
+.record-card .record-week-table .record-write{font-size:.78rem;line-height:1.65;min-width:0}
+.record-card .record-week-table .record-exercise-name td{font-weight:650}
+.record-card .record-week-sheet{width:100%;max-width:100%;overflow:visible}
+.record-card .record-week-table th{padding:8px 6px}
+.record-card .record-week-table td{padding:7px 6px}
+@media print{
+ .record-card .report-head,.record-card .report-meta{display:none!important}
+ .record-card .record-week-sheet{break-before:page;page-break-before:always;margin:0;padding:0}
+ .record-card .record-week-sheet:first-of-type{break-before:auto;page-break-before:auto}
+ .record-card .record-week-table{width:100%!important;table-layout:fixed!important;font-size:9pt}
+ .record-card .record-week-table th:nth-child(1){width:14%!important}
+ .record-card .record-week-table th:nth-child(2){width:22%!important}
+ .record-card .record-week-table th:nth-child(n+3){width:auto!important}
+ .record-card .record-week-table td,.record-card .record-week-table th{padding:5px!important}
+ .record-card .record-week-table .record-write{font-size:8pt;line-height:1.7}
+ .record-card .record-week-sheet .report-dayhead{padding:3px 0 7px}
+ .record-card .record-week-sheet .report-dayhead h2{font-size:16pt}
+}
+</style><style id="record-card-v23">
+/* Dedicated recording sheets: never inherit detailed-report table widths. */
+.record-card{width:100%;max-width:100%;padding:0!important;border:0!important;background:#fff}
+.record-card .record-page{width:100%;max-width:100%;margin:0 0 24px;padding:16px 18px;background:#fff;border:1px solid #d3dce7;break-before:page;page-break-before:always;overflow:visible}
+.record-card .record-page:first-child{break-before:auto;page-break-before:auto}
+.record-card .record-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px;border-bottom:2px solid #173b64;padding-bottom:10px}
+.record-card .record-page-head b{font-size:10px;letter-spacing:.12em;color:#345b7d}
+.record-card .record-page-head h2{font-size:20px;margin:3px 0}
+.record-card .record-page-head span,.record-card .record-page-period{font-size:11px;color:#52647a}
+.record-card .record-page-period{text-align:right;line-height:1.7;flex-shrink:0}
+.record-card .record-grid{width:100%!important;max-width:100%!important;border-collapse:collapse;table-layout:fixed!important;font-size:12px}
+.record-card .record-grid th,.record-card .record-grid td{border:1px solid #b8c6d6!important;padding:7px 8px!important;vertical-align:middle;overflow-wrap:anywhere}
+.record-card .record-grid th{background:#173b64!important;color:#fff!important;text-align:left}
+.record-card .record-grid th small{display:block;font-size:10px;margin-top:5px;font-weight:400}
+.record-card .record-grid .record-exercise-name td{background:#eaf0f7!important;color:#193b5d;font-weight:700;padding:6px 8px!important}
+.record-card .record-grid .record-set-row td{height:54px}
+.record-card .record-grid .record-entry{font-size:11px;line-height:1.9}
+.record-card .record-grid .record-entry>div{display:flex;align-items:baseline;gap:5px}
+.record-card .record-grid .record-line{flex:1;border-bottom:1px solid #8997a6;min-width:12px;height:12px}
+.record-card .record-page-notes{font-size:11px;margin-top:12px}
+@media print{
+ @page{size:A4 portrait;margin:12mm}
+ .record-card .record-page{width:100%!important;max-width:100%!important;padding:0!important;margin:0!important;border:0!important;break-before:page;page-break-before:always}
+ .record-card .record-page:first-child{break-before:auto;page-break-before:auto}
+ .record-card .record-grid{font-size:10pt!important}
+ .record-card .record-grid th,.record-card .record-grid td{padding:5px 6px!important}
+ .record-card .record-grid .record-set-row td{height:15mm!important}
+ .record-card .record-grid tr{break-inside:avoid;page-break-inside:avoid}
+ .record-card .record-grid th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .record-card .record-grid .record-exercise-name td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=23"></script></body></html>

@@ -1,0 +1,1 @@
+V22.1: Fix record card column widths and horizontal overflow; restore all week columns; compact printable A4 record layout. Existing data, programme and client link code unchanged.
