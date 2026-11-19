@@ -77,7 +77,7 @@ const fresh=()=>({schema:1,clients:[],equipment:categories.map(name=>({id:uid(),
 let printFontSize='normal';
 let printLayout='detailed';
 let recordWeeks=6;
-let recordWeeksPerSheet=3;
+let recordWeeksPerSheet=2;
 let db=fresh(),tab='Clients',clientId='',programmeId='',editDay=0,search='',eqFilter='',muscleFilter='',kindFilter='',miniClient='',miniSelected=new Set(),swapTarget=null,swapFilters={equipment:'',muscle:'',kind:'',search:''};
 const tabs=['Clients','Exercise Database','Programme Creator','Edit & Print','Workout Mode','Training Record','Templates','Fitness Calculators','Challenges','Mini-App','Data & Backup'];
 const dbOpen=()=>new Promise((resolve,reject)=>{const r=indexedDB.open('FitnessManagerRebuiltV1',1);r.onupgradeneeded=()=>r.result.createObjectStore('data');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
@@ -423,151 +423,28 @@ function showSwapPanel(){
 function updateSwapResults(){const out=$('swapResults');if(!out)return;const matches=filterExercises(swapFilters);out.innerHTML=`<p class="muted">${matches.length} matching exercises</p>`+matches.slice(0,100).map(e=>`<div class="entry swap-result"><div><b>${esc(e.name)}</b><div class="tiny muted">${esc(e.equipment)} · ${esc(e.muscle)} · ${esc(exerciseKind(e))}</div>${demo(e)}${techniqueDetails(e)}</div><button class="primary" data-action="chooseSwap" data-id="${esc(e.id)}">Use exercise</button></div>`).join('')+(matches.length>100?'<p>Showing first 100 results. Refine the filters to see more.</p>':'');}
 function dayEditor(d){return `<section class="panel"><div class="row"><h3>Workout days</h3><button data-action="addDay">+ Add day</button></div>${d.days.map((day,di)=>`<details ${di===editDay?'open':''}><summary>${esc(day.name)} · ${esc(day.style||'Mixed')} · ${day.exercises.length} exercises</summary><div class="grid"><label>Day name<input data-dayname="${di}" value="${esc(day.name)}"></label><label>Training style<select data-daystyle="${di}">${optionList(dayStyles,day.style||'Mixed')}</select></label></div><div class="row"><button data-action="renameDay" data-index="${di}">Save day name/style</button><button data-action="creatorApplyDay" data-index="${di}" class="primary">Apply style to this day</button><button data-action="saveDayLibrary" data-index="${di}">Save day to library</button><label>Copy day to<select id="copyDayTarget${di}"><option value="">Select another day</option>${d.days.map((other,j)=>`<option value="${j}" ${j===di?'disabled':''}>${esc(other.name)}</option>`).join('')}</select></label><button data-action="copyDay" data-index="${di}" ${d.days.length<2?'disabled':''}>Copy day</button><label>Saved day<select id="savedDayTarget${di}">${opt((db.savedDays||[]).map(x=>({id:x.id,name:x.name+' · '+x.style})),'','Choose saved day')}</select></label><button data-action="loadSavedDay" data-index="${di}" ${(db.savedDays||[]).length?'':'disabled'}>Use saved day</button><button data-action="moveDayUp" data-index="${di}" ${di===0?'disabled':''}>↑ Day</button><button data-action="moveDayDown" data-index="${di}" ${di===d.days.length-1?'disabled':''}>↓ Day</button><button data-action="removeDay" data-index="${di}" class="danger">Remove</button></div>${day.exercises.map((x,xi)=>`<details class="entry creator-exercise"><summary><b>${esc(x.name)}</b><span class="muted"> · ${esc(x.equipment||'')} · ${cardioExercise(x)?'Cardio':'Resistance / Other'} · ${esc(x.sets||1)} ${cardioExercise(x)?'round(s)':'set(s)'}</span></summary><div class="creator-exercise-body"><div class="row"><button data-action="moveExerciseUp" data-index="${di}:${xi}" ${xi===0?'disabled':''}>↑</button><button data-action="moveExerciseDown" data-index="${di}:${xi}" ${xi===day.exercises.length-1?'disabled':''}>↓</button></div><p>${demo(x)}</p>${techniqueDetails(x)}<label>Instructor note (optional)<textarea data-item="${di}:${xi}:instructorNote" rows="2" placeholder="Individual guidance or modifications">${esc(x.instructorNote||'')}</textarea></label>${cardioExercise(x)?`<label>Total cardio time (minutes)<input data-item="${di}:${xi}:totalTime" type="number" min="1" step="1" value="${esc(cardioMinutes(x))}" placeholder="e.g. 25"></label><label>Cardio workout method<select data-item="${di}:${xi}:cardioMethod">${optionList(cardioMethods,x.cardioMethod||cardioMethods.find(m=>x.name.includes(m))||'Steady State')}</select></label>`:''}${supportsWarmupSets(x)?`<div class="panel"><label><input type="checkbox" data-item="${di}:${xi}:warmupEnabled" ${x.warmupEnabled?'checked':''}> Include light warm-up sets before working sets</label><div class="grid"><label>Warm-up sets<select data-item="${di}:${xi}:warmupSets">${dropdownOptions(['1','2','2–3'],x.warmupSets||'1')}</select></label><label>Warm-up repetitions<select data-item="${di}:${xi}:warmupReps">${dropdownOptions(['12–15','15–20','16–20','20'],x.warmupReps||'16–20')}</select></label><label>Warm-up load / instruction<input data-item="${di}:${xi}:warmupWeight" value="${esc(x.warmupWeight||'Light weight')}"></label></div><p class="tiny muted">Warm-up sets are separate from working sets. Use an easy load and controlled technique.</p></div>`:''}<div class="grid"><label>${cardioExercise(x)?'Intervals / rounds':'Sets'}<select data-item="${di}:${xi}:sets">${dropdownOptions(setChoices,x.sets||1)}</select></label>${metricFields(x).map(([k,label])=>`<label>${label}${k==='reps'?`<select data-item="${di}:${xi}:${k}">${dropdownOptions(repChoices,x[k]||'8–12')}</select>`:k==='duration'?`<select data-item="${di}:${xi}:${k}">${dropdownOptions(timeChoices,x[k]||'10','min')}</select>`:`<input data-item="${di}:${xi}:${k}" value="${esc(x[k]??'')}">`}</label>`).join('')}<label>Rest (sec)<select data-item="${di}:${xi}:rest">${dropdownOptions(restChoices,x.rest??60,'sec')}</select></label></div><div class="row"><button data-action="swapExercise" data-index="${di}:${xi}">Swap</button><button data-action="removeExercise" data-index="${di}:${xi}" class="danger">Remove</button></div></div></details>`).join('')}<div class="entry"><h4>Add exercise to ${esc(day.name)}</h4><div class="grid"><label>Equipment<select id="addEq${di}" data-filterday="${di}"><option value="">All equipment</option>${optionList(addEquipmentOptions(),'')}</select></label><label>Muscle / body area<select id="addMus${di}" data-filterday="${di}"><option value="">All muscles</option>${optionList(muscleOptions(),'')}</select></label></div><label>Search exercises<input id="addSearch${di}" data-filterday="${di}" placeholder="Search by name or type"></label><div class="row"><select id="addToDay${di}">${opt(db.exercises.slice(0,350).map(e=>({id:e.id,name:`${e.name} · ${e.equipment}`})),'','Choose exercise')}</select><button data-action="addToDay" data-index="${di}" class="primary">+ Add exercise</button></div></div></details>`).join('')}<div id="swapPanel" class="panel hidden" aria-live="polite"></div></section>`}
 function printDocument(p){const c=db.clients.find(c=>c.id===p.clientId);return `<div class="report"><div class="report-head"><div><div class="report-brand">FITNESS PROGRAMME MANAGER</div><h1>${esc(p.name)}</h1><p class="report-sub">Personal training programme</p></div><div class="report-date">PROGRAMME DATE<br><strong>${esc(p.date)}</strong></div></div>${p.trainingTargets?.length?`<div class="report-targets"><b>Training targets</b>${p.trainingTargets.map(t=>`<p>${esc(t.name)}: ${t.low}–${t.high} bpm</p>`).join('')}</div>`:''}${p.calculatorNotes?.length?`<div class="report-targets"><b>Calculator notes</b>${p.calculatorNotes.map(t=>`<p>${esc(t.title)}: ${esc(t.summary)}</p>`).join('')}</div>`:''}<div class="report-meta"><div><small>PREPARED FOR</small><strong>${esc(c?.name||'Client')}</strong></div><div><small>WORKOUT DAYS</small><strong>${p.days.length}</strong></div><div><small>PROGRAMME</small><strong>${esc(p.name)}</strong></div></div>${p.days.map((day,di)=>`<section class="report-day"><div class="report-dayhead"><span>SESSION ${di+1}</span><h2>${esc(day.name)}</h2><p>${esc(day.style||'Mixed')}</p></div><table class="report-table"><thead><tr><th>Exercise</th><th>Prescription</th><th>Equipment / demo</th></tr></thead><tbody>${day.exercises.map(x=>`<tr><td><strong>${esc(x.name)}</strong><div class="report-note">${esc(exerciseTechnique(x))}</div>${x.instructorNote?`<div class="report-instructor-note"><b>Instructor note:</b> ${esc(x.instructorNote)}</div>`:''}</td><td>${warmupInfo(x)?`<b>Warm-up:</b> ${esc(warmupInfo(x))}<br>`:''}${esc(x.sets||1)} ${cardioExercise(x)?'round(s)':'set(s)'}<br>${metricFields(x).filter(([k])=>x[k]!==undefined&&x[k]!==''&&!(cardioExercise(x)&&k==='duration')).map(([k,label])=>`${esc(label)}: ${esc(x[k])}`).join('<br>')}<br>${cardioExercise(x)?`<br><b>Total cardio time: ${cardioTimeLabel(x)}</b>`:''}${x.cardioMethod?`<br>Method: ${esc(x.cardioMethod)}`:''}<br>Rest: ${esc(x.rest??60)} sec</td><td>${esc(x.equipment||'Bodyweight')}<div><a href="${esc(exerciseDemoUrl(x))}" target="_blank" rel="noopener noreferrer">Exercise example / demo</a></div></td></tr>`).join('')}</tbody></table></section>`).join('')}<div class="report-foot">Programme guidance is individual and should be reviewed by the instructor. Exercise demonstrations are available using the linked URLs.</div></div>`}
-// Direct PDF export: no HTML print layout, browser pagination, or external libraries.
-function exportRecordCardsPDF(p){
- const weeks=Math.max(1,Math.min(52,Number(recordWeeks)||6));
- const per=Math.max(1,Math.min(4,Number(recordWeeksPerSheet)||2));
- const client=db.clients.find(c=>c.id===p.clientId);
- const W=595.28,H=841.89,margin=32,usableW=W-2*margin;
- const clean=v=>String(v??'').replace(/[\u2010-\u2015]/g,'-').replace(/\u00b7/g,' / ').replace(/[^\x20-\x7e]/g,' ');
- const pdfstr=v=>'('+clean(v).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)')+')';
- const all=[];
- function renderDay(day,dayIndex,ws){
-  const groups=[];
-  for(const x of day.exercises||[]){
-   const cardio=cardioExercise(x);
-   const count=Math.max(1,Math.min(12,numberOfSets(x.sets)));
-   const warm=warmupInfo(x)?Math.max(1,Math.min(4,numberOfSets(x.warmupSets||1))):0;
-   const rows=[];
-   for(let i=1;i<=warm;i++)rows.push({set:'Warm-up '+i,target:clean(x.warmupReps||'16-20')+' reps / '+clean(x.warmupWeight||'light'),cardio:false});
-   for(let i=1;i<=count;i++)rows.push({set:(cardio?'Round ':'Set ')+i,target:cardio?clean(cardioTimeLabel(x)):clean(x.reps||'-')+' reps'+(x.weight?' / '+clean(x.weight)+' kg':''),cardio});
-   groups.push({name:clean(x.name),rows});
-  }
-  const rows=groups.reduce((sum,g)=>sum+1+g.rows.length,0);
-  // 625pt of printable body height, with sensible minimum 11pt per row.
-  const rowH=Math.min(25,625/Math.max(1,rows));
-  if(rowH<11)throw Error('Day '+(dayIndex+1)+' has '+rows+' rows and cannot fit legibly on one A4 sheet. Reduce sets or split the workout into days.');
-  const font=Math.max(7.1,Math.min(9.5,rowH*.42));
-  const columns=[margin,margin+115,margin+243];
-  const weekW=(usableW-243)/ws.length;
-  for(let i=1;i<=ws.length;i++)columns.push(margin+243+weekW*i);
-  const ops=[];
-  const op=v=>ops.push(v);
-  const text=(v,x,y,size=font,bold=false)=>op(`BT /${bold?'F2':'F1'} ${size.toFixed(2)} Tf ${x.toFixed(2)} ${y.toFixed(2)} Td ${pdfstr(v)} Tj ET`);
-  const line=(x1,y1,x2,y2)=>op(`${x1.toFixed(2)} ${y1.toFixed(2)} m ${x2.toFixed(2)} ${y2.toFixed(2)} l S`);
-  const shade=(x,y,w,h,r,g,b)=>op(`${r} ${g} ${b} rg ${x.toFixed(2)} ${y.toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)} re f 0 0 0 rg`);
-  shade(margin,779,usableW,31,.10,.23,.39);
-  op('1 1 1 rg');text('WORKOUT RECORD',margin+9,790,14,true);op('0 0 0 rg');
-  text('Day '+(dayIndex+1)+' - '+clean(day.name),margin,755,13,true);
-  text(clean(client?.name||'Client')+'  |  '+clean(p.name),margin,738,8);
-  text('Weeks '+ws[0]+'-'+ws[ws.length-1]+' of '+weeks,W-margin-122,756,8,true);
-  const top=717,headerH=28;
-  shade(margin,top-headerH,usableW,headerH,.86,.91,.96);
-  text('EXERCISE / SET',columns[0]+4,top-12,8,true);text('TARGET',columns[1]+4,top-12,8,true);
-  for(let i=0;i<ws.length;i++){text('WEEK '+ws[i],columns[i+2]+4,top-11,8,true);text('Date: ________',columns[i+2]+4,top-22,6.3);}
-  line(margin,top,W-margin,top);line(margin,top-headerH,W-margin,top-headerH);
-  let y=top-headerH;
-  for(const group of groups){
-   shade(margin,y-rowH,usableW,rowH,.91,.95,.98);
-   text(group.name.slice(0,70),margin+5,y-rowH*.70,Math.min(9,font),true);
-   y-=rowH;line(margin,y,W-margin,y);
-   for(const row of group.rows){
-    const bottom=y-rowH;
-    text(row.set,columns[0]+4,bottom+rowH*.34,font);
-    text(row.target.slice(0,29),columns[1]+4,bottom+rowH*.34,font);
-    for(let i=0;i<ws.length;i++){
-     const l=columns[i+2],r=columns[i+3];
-     const fs=Math.max(6,Math.min(7.3,font-1));
-     text(row.cardio?'Min:':'Reps:',l+3,bottom+rowH*.61,fs);
-     text(row.cardio?'Km:':'Kg:',l+3,bottom+rowH*.18,fs);
-     const start=l+Math.min(34,(r-l)*.45);
-     line(start,bottom+rowH*.57,r-4,bottom+rowH*.57);
-     line(start,bottom+rowH*.14,r-4,bottom+rowH*.14);
-    }
-    y=bottom;line(margin,y,W-margin,y);
-   }
-  }
-  for(const x of columns)line(x,top,x,y);
-  text('Session notes: ______________________________________________________________',margin,Math.max(25,y-22),8);
-  text('Day '+(dayIndex+1)+' | Weeks '+ws[0]+'-'+ws[ws.length-1],margin,15,7);
-  return ops.join('\n');
- }
- try{
-  for(let first=1;first<=weeks;first+=per){
-   const ws=Array.from({length:Math.min(per,weeks-first+1)},(_,i)=>first+i);
-   for(const [di,day] of (p.days||[]).entries()){
-    if(!(day.exercises||[]).length)continue;
-    all.push(renderDay(day,di,ws));
-   }
-  }
-  if(!all.length)throw Error('The selected programme has no workout exercises.');
-  const objects=[null];
-  const add=body=>{objects.push(body);return objects.length-1;};
-  const catalog=add(''),tree=add('');
-  const font=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
-  const bold=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>');
-  const pageIds=[];
-  for(const stream of all){
-   const content=add('<< /Length '+new TextEncoder().encode(stream).length+' >>\nstream\n'+stream+'\nendstream');
-   pageIds.push(add('<< /Type /Page /Parent '+tree+' 0 R /MediaBox [0 0 '+W+' '+H+'] /Resources << /Font << /F1 '+font+' 0 R /F2 '+bold+' 0 R >> >> /Contents '+content+' 0 R >>'));
-  }
-  objects[catalog]='<< /Type /Catalog /Pages '+tree+' 0 R >>';
-  objects[tree]='<< /Type /Pages /Kids ['+pageIds.map(i=>i+' 0 R').join(' ')+'] /Count '+pageIds.length+' >>';
-  let pdf='%PDF-1.4\n';const offsets=[0];
-  for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+' 0 obj\n'+objects[i]+'\nendobj\n';}
-  const xref=pdf.length;
-  pdf+='xref\n0 '+objects.length+'\n0000000000 65535 f \n';
-  for(let i=1;i<objects.length;i++)pdf+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';
-  pdf+='trailer\n<< /Size '+objects.length+' /Root '+catalog+' 0 R >>\nstartxref\n'+xref+'\n%%EOF\n';
-  const blob=new Blob([pdf],{type:'application/pdf'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='workout-record-'+clean(p.name).toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.pdf';
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),60000);
- }catch(err){alert('Record-card PDF: '+err.message);}
-}
-
 function recordCardDocument(p){
  const c=db.clients.find(x=>x.id===p.clientId);
  const weeks=Math.max(1,Math.min(52,Number(recordWeeks)||6));
- const perPage=Math.max(1,Math.min(4,Number(recordWeeksPerSheet)||2));
- const pages=[];
- for(let start=1;start<=weeks;start+=perPage){
-  const ws=Array.from({length:Math.min(perPage,weeks-start+1)},(_,i)=>start+i);
-  for(const [di,day] of p.days.entries()){
-   if(!day.exercises?.length)continue;
-   const groups=[];
-   let totalRows=0;
-   for(const x of day.exercises){
-    const cardio=cardioExercise(x),warm=warmupInfo(x);
-    const sets=Math.max(1,Math.min(8,numberOfSets(x.sets)));
-    const warmSets=warm?Math.max(1,Math.min(4,numberOfSets(x.warmupSets||1))):0;
-    const lines=[];
-    for(let i=1;i<=warmSets;i++)lines.push({label:`Warm-up ${i}`,target:`${esc(x.warmupReps||'16–20')} reps · ${esc(x.warmupWeight||'Light')}`,cardio:false});
-    for(let i=1;i<=sets;i++)lines.push({label:cardio?`Round ${i}`:`Set ${i}`,target:cardio?`${cardioTimeLabel(x)} total`:`${esc(x.reps||'—')} reps${x.weight?' · '+esc(x.weight)+' kg':''}`,cardio});
-    totalRows+=lines.length+1;
-    groups.push(`<tbody class="record-exercise-group"><tr class="record-exercise-name"><td colspan="${2+ws.length}">${esc(x.name)}</td></tr>${lines.map(l=>`<tr class="record-set-row"><td>${l.label}</td><td>${l.target}</td>${ws.map(()=>`<td class="record-entry"><div>${l.cardio?'Min':'Reps'}: <span class="record-line"></span></div><div>${l.cardio?'Km':'Kg'}: <span class="record-line"></span></div></td>`).join('')}</tr>`).join('')}</tbody>`);
-   }
-   // Automatically reduce row heights on long days so a complete day fits one A4 page.
-   // Each week group receives its own sheet, and every sheet contains exactly one day.
-   const rowMm=totalRows>42?3.7:totalRows>34?4.5:totalRows>26?5.5:totalRows>19?7:9;
-   const textPt=totalRows>42?6.5:totalRows>34?7:totalRows>26?7.5:8.5;
-   pages.push(`<section class="record-a4-page" style="--row-mm:${rowMm}mm;--record-pt:${textPt}pt"><div class="record-a4-head"><div><b>WORKOUT RECORD</b><h2>Day ${di+1} — ${esc(day.name)}</h2><span>${esc(c?.name||'Client')} · ${esc(p.name)}</span></div><div>WEEKS ${ws[0]}–${ws[ws.length-1]} OF ${weeks}</div></div><table class="record-a4-table"><colgroup><col style="width:19%"><col style="width:23%">${ws.map(()=>'<col>').join('')}</colgroup><thead><tr><th>EXERCISE / SET</th><th>TARGET</th>${ws.map(w=>`<th>WEEK ${w}<small>Date: ______</small></th>`).join('')}</tr></thead>${groups.join('')}</table><div class="record-a4-notes">Session notes: ________________________________________________________________________</div></section>`);
-  }
+ const perSheet=Math.max(1,Math.min(4,Number(recordWeeksPerSheet)||2));
+ const sheets=[];
+ for(const [di,day] of p.days.entries())for(let start=1;start<=weeks;start+=perSheet){
+  const ws=Array.from({length:Math.min(perSheet,weeks-start+1)},(_,i)=>start+i);
+  const heads=ws.map(w=>`<th class="week-col">WEEK ${w}<small>Date: __________</small></th>`).join('');
+  const rows=day.exercises.map(x=>{
+   const cardio=cardioExercise(x),warm=warmupInfo(x);
+   const sets=Math.max(1,Math.min(8,numberOfSets(x.sets)));
+   const warmSets=warm?Math.max(1,Math.min(4,numberOfSets(x.warmupSets||1))):0;
+   const lines=[];
+   for(let i=1;i<=warmSets;i++)lines.push({label:`Warm-up ${i}`,target:`${esc(x.warmupReps||'16–20')} reps · ${esc(x.warmupWeight||'Light')}`,cardio:false});
+   for(let i=1;i<=sets;i++)lines.push({label:cardio?`Round ${i}`:`Set ${i}`,target:cardio?`${cardioTimeLabel(x)} total`:`${esc(x.reps||'—')} reps${x.weight?' · '+esc(x.weight)+' kg':''}`,cardio});
+   return `<tr class="record-exercise-name"><td colspan="${2+ws.length}">${esc(x.name)}${x.instructorNote?` <span class="record-note">· ${esc(x.instructorNote)}</span>`:''}</td></tr>`+lines.map(l=>`<tr class="record-set-row"><td>${l.label}</td><td>${l.target}</td>${ws.map(()=>`<td class="record-entry"><div>${l.cardio?'Time':'Reps'}: <span class="record-line"></span></div><div>${l.cardio?'Distance':'Weight'}: <span class="record-line"></span></div></td>`).join('')}</tr>`).join('');
+  }).join('');
+  sheets.push(`<section class="record-page"><div class="record-page-head"><div><b>WORKOUT RECORD</b><h2>${esc(day.name)}</h2><span>${esc(c?.name||'Client')} · ${esc(p.name)}</span></div><div class="record-page-period">WEEKS ${ws[0]}–${ws.at(-1)} OF ${weeks}<br>SESSION ${di+1}</div></div><table class="record-grid"><colgroup><col style="width:15%"><col style="width:23%">${ws.map(()=>'<col>').join('')}</colgroup><thead><tr><th>SET</th><th>TARGET</th>${heads}</tr></thead><tbody>${rows}</tbody></table><div class="record-page-notes">Session notes: ${ws.map(w=>`Week ${w}: ________________________`).join(' &nbsp; ')}</div></section>`);
  }
- return pages.length?`<div class="record-card record-a4">${pages.join('')}</div>`:'<p>No exercises in this programme.</p>';
+ return `<div class="record-card">${sheets.join('')}</div>`;
 }
-function printRecordSheets(){
- const area=document.querySelector('#printArea .record-a4');
- if(!area){alert('Select an approved programme first.');return;}
- const win=window.open('','_blank');
- if(!win){alert('Please allow pop-ups for the printable record sheets.');return;}
- const css=`@page{size:A4 portrait;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0;background:white;color:#172c40;font-family:Arial,sans-serif}.record-a4-page{width:210mm;height:297mm;max-height:297mm;padding:9mm 10mm 10mm;display:block;overflow:hidden;page-break-after:always;break-after:page}.record-a4-page:last-child{page-break-after:auto;break-after:auto}.record-a4-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8mm;border-bottom:2px solid #173b64;padding-bottom:2mm;margin-bottom:3mm;height:21mm}.record-a4-head h2{font-size:14pt;margin:1mm 0}.record-a4-head b,.record-a4-head span,.record-a4-head>div:last-child{font-size:8pt}.record-a4-table{width:100%;height:247mm;table-layout:fixed;border-collapse:collapse;font-size:var(--record-pt,8pt)}.record-a4-table th,.record-a4-table td{border:1px solid #9baec0;padding:.35mm .8mm;overflow-wrap:anywhere}.record-a4-table th{background:#173b64;color:white;text-align:left}.record-a4-table th small{display:block;font-weight:normal}.record-a4-table .record-exercise-name td{background:#e8f0f8;font-weight:bold;color:#173b64}.record-a4-table .record-entry>div{display:flex;gap:1mm;align-items:baseline;line-height:1.1}.record-line{flex:1;border-bottom:1px solid #8393a3;min-width:2mm}.record-a4-notes{font-size:8pt;margin-top:2mm;height:5mm}@media print{.record-a4-page{break-inside:avoid;page-break-inside:avoid}.record-a4-table tbody{break-inside:auto;page-break-inside:auto}.record-a4-table tr{break-inside:avoid;page-break-inside:avoid}th,.record-exercise-name td{-webkit-print-color-adjust:exact;print-color-adjust:exact}}`;
- win.document.open();win.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Workout record sheets</title><style>'+css+'</style></head><body>'+area.innerHTML+'</body></html>');win.document.close();
- win.focus();setTimeout(()=>win.print(),350);
-}
-function viewEdit(){const p=current();return `<h2 class="no-print">Edit & Print</h2><div class="panel no-print"><div class="row">${clientPick()}${programmePick()}<label>Print format<select id="printLayout"><option value="detailed" ${printLayout==='detailed'?'selected':''}>Detailed programme</option><option value="record" ${printLayout==='record'?'selected':''}>Blank workout record card</option></select></label>${printLayout==='record'?`<label>Programme duration<select id="recordWeeks">${[1,2,3,4,5,6,8,10,12,16,20,24,26,52].map(n=>`<option value="${n}" ${recordWeeks===n?'selected':''}>${n} week${n===1?'':'s'}</option>`).join('')}</select></label><label>Weeks per printed sheet<select id="recordWeeksPerSheet">${[1,2,3,4].map(n=>`<option value="${n}" ${recordWeeksPerSheet===n?'selected':''}>${n}</option>`).join('')}</select></label>`:''}<label>Print text size<select id="printFontSize"><option value="normal" ${printFontSize==='normal'?'selected':''}>Normal</option><option value="large" ${printFontSize==='large'?'selected':''}>Large</option><option value="extra" ${printFontSize==='extra'?'selected':''}>Extra large</option></select></label><button data-action="print" class="primary" ${!p?'disabled':''}>Print / Save as PDF</button></div><p class="muted">Workout record cards download as an A4 PDF. Detailed programmes use the normal print menu.</p></div>${!p?'<p>Select an approved programme.</p>':`<div id="printArea" class="print-size-${printFontSize}">${printLayout==='record'?'<div class="panel no-print"><h3>Download A4 workout record PDF</h3><p>One workout day per page. Your selected weeks are included. Click Print / Save as PDF to download the ready-to-print file.</p></div>':printDocument(p)}</div><div class="panel no-print"><button data-action="editApproved" class="primary">Edit this programme in Creator</button><button data-action="renameApproved">Rename / change date</button></div>`}`}
+function viewEdit(){const p=current();return `<h2 class="no-print">Edit & Print</h2><div class="panel no-print"><div class="row">${clientPick()}${programmePick()}<label>Print format<select id="printLayout"><option value="detailed" ${printLayout==='detailed'?'selected':''}>Detailed programme</option><option value="record" ${printLayout==='record'?'selected':''}>Blank workout record card</option></select></label>${printLayout==='record'?`<label>Programme duration<select id="recordWeeks">${[1,2,3,4,5,6,8,10,12,16,20,24,26,52].map(n=>`<option value="${n}" ${recordWeeks===n?'selected':''}>${n} week${n===1?'':'s'}</option>`).join('')}</select></label><label>Weeks per printed sheet<select id="recordWeeksPerSheet">${[1,2,3,4].map(n=>`<option value="${n}" ${recordWeeksPerSheet===n?'selected':''}>${n}</option>`).join('')}</select></label>`:''}<label>Print text size<select id="printFontSize"><option value="normal" ${printFontSize==='normal'?'selected':''}>Normal</option><option value="large" ${printFontSize==='large'?'selected':''}>Large</option><option value="extra" ${printFontSize==='extra'?'selected':''}>Extra large</option></select></label><button data-action="print" class="primary" ${!p?'disabled':''}>Print / Save as PDF</button></div><p class="muted">Professional print layout: select “Save as PDF” in your phone's print menu.</p></div>${!p?'<p>Select an approved programme.</p>':`<div id="printArea" class="print-size-${printFontSize}">${printLayout==='record'?recordCardDocument(p):printDocument(p)}</div><div class="panel no-print"><button data-action="editApproved" class="primary">Edit this programme in Creator</button><button data-action="renameApproved">Rename / change date</button></div>`}`}
 function viewWorkout(){const p=current();return `<h2>Workout Mode</h2><div class="panel no-print"><div class="row">${clientPick()}${programmePick()}</div></div>${!p?'<p>Choose an approved programme.</p>':`<div class="panel no-print">${p.trainingTargets?.length?`<p><b>Training targets:</b> ${p.trainingTargets.map(t=>`${esc(t.name)} ${t.low}–${t.high} bpm`).join(' · ')}</p>`:''}${p.calculatorNotes?.length?`<details><summary>Calculator notes</summary>${p.calculatorNotes.map(t=>`<p>${esc(t.title)}: ${esc(t.summary)}</p>`).join('')}</details>`:''}<label>Workout day</label><select id="workoutDay">${p.days.map((d,i)=>`<option value="${i}">${esc(d.name)}</option>`).join('')}</select><div id="workoutItems"></div><button class="primary" data-action="recordWorkout">Save workout record</button></div>`}`}
 function renderWorkoutItems(){const p=current(),i=Number($('workoutDay')?.value||0),out=$('workoutItems');if(!p||!out)return;out.innerHTML=(p.days[i]?.exercises||[]).map((e,j)=>`<div class="entry"><h3>${esc(e.name)}</h3>${exerciseGuide(e)}${warmupInfo(e)?`<p><b>Warm-up:</b> ${esc(warmupInfo(e))}</p>`:''}<p class="muted">${e.cardioMethod?`Method: ${esc(e.cardioMethod)} · `:''}Planned: ${esc(e.sets||1)} ${cardioExercise(e)?'rounds':'sets'} · ${metricFields(e).filter(([k])=>e[k]!==undefined&&e[k]!=='').map(([k,l])=>`${l}: ${esc(e[k])}`).join(' · ')}</p>${Array.from({length:Math.max(1,Math.min(30,numberOfSets(e.sets)))},(_,si)=>`<div class="set-record"><strong>${cardioExercise(e)?'Round':'Set'} ${si+1}</strong><div class="grid">${metricFields(e).map(([k,label])=>`<label>${label}<input data-actual="${j}:${si}:${k}" value="${esc(k==='reps'?'':e[k]??'')}"></label>`).join('')}<label>Notes<input data-actual="${j}:${si}:notes"></label></div></div>`).join('')}</div>`).join('')}
 function viewRecords(){return `<h2>Training Record</h2><div class="panel">${clientPick()}</div>${db.records.filter(r=>!clientId||r.clientId===clientId).slice().reverse().map(r=>`<div class="panel"><b>${esc(r.name)}</b> · ${esc(r.date)} · ${esc(r.day)}<details><summary>Session details</summary>${r.items.map(x=>`<div class="entry"><b>${esc(x.name)}</b> ${demo(db.exercises.find(e=>e.name===x.name)||x)}${techniqueDetails(db.exercises.find(e=>e.name===x.name)||x)}${(x.sets||[x]).map((set,i)=>`<p>Set / round ${i+1}: ${Object.entries(set).filter(([k,v])=>v).map(([k,v])=>`${esc(k)}: ${esc(v)}`).join(' · ')}</p>`).join('')}</div>`).join('')}</details></div>`).join('')||'<p>No recorded workouts yet.</p>'}`}
@@ -754,7 +631,7 @@ case'deleteProgramme':if(confirm('Delete approved copy?')){db.programmes=db.prog
 case'restoreAuto':if(!c)return;db.drafts[c.id]={days:clone(db.autosaves[c.id][i].days)};tab='Programme Creator';break;
 case'editApproved':if(!current())return;db.drafts[clientId]={structure:current().structure||'Custom',days:clone(current().days),editingProgrammeId:current().id,defaultSets:current().defaultSets||'3',defaultReps:current().defaultReps||'8–12',defaultRest:current().defaultRest??60,duration:current().duration||45};tab='Programme Creator';break;
 case'renameApproved':if(!current())return;{const n=promptText('Programme name:',current().name),date=promptText('Date (YYYY-MM-DD):',current().date);if(!n||!date)return;if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return alert('Invalid date');current().name=n;current().date=date}break;
-case'print':if(printLayout==='record'){exportRecordCardsPDF(current());return;}window.print();return;
+case'print':window.print();return;
 case'addEquipment':{const input=promptText('Equipment name:');if(!input)return;const name=canonicalEquipment(input);const existing=db.equipment.find(e=>canonicalEquipment(e.name).toLowerCase()===name.toLowerCase());if(existing){alert('This equipment already exists: '+existing.name+'. Edit its quantity instead.');return}db.equipment.push({id:uid(),name,quantity:1,hidden:false})}break;
 case'editEquipment':{const x=db.equipment.find(e=>e.id===id);if(!x)return;const n=promptText('Equipment name:',x.name),q=promptText('Quantity:',x.quantity);if(n===null||q===null)return;x.name=canonicalEquipment(n);x.quantity=Math.max(0,Number(q)||0);dedupeEquipment()}break;
 case'toggleEquipment':{const x=db.equipment.find(e=>e.id===id);x.hidden=!x.hidden}break;
