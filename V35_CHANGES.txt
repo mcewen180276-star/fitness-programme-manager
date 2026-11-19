@@ -1,0 +1,1 @@
+Restored V21 original record-card design and added V22 duration and 1-4 weeks per card selectors. No V23-V34 booklet or custom pagination rules. This intentionally reverts later upgrades.
