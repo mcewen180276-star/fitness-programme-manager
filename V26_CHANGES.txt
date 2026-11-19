@@ -1,0 +1,1 @@
+V26: Restored original record-card table styling. A4 landscape printing, two portrait record pages side-by-side for folding as a booklet. Exercise sets grouped and pre-paginated so an exercise starts on the next half-page if it will not fit. Retains V24 cardio time fix and client mini-app.

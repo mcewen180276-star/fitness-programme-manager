@@ -80,33 +80,35 @@
  .record-card .record-grid .record-exercise-name td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
-
-<style id="record-two-up-v25">
-/* Two record cards per A4 page; no exercise group may break between cards. */
-.record-two-up .record-print-sheet{display:flex;flex-direction:column;gap:8px;margin:0 0 20px}
-.record-two-up .record-page{box-sizing:border-box;min-height:0!important;margin:0!important;padding:9px!important;break-before:auto!important;page-break-before:auto!important}
-.record-two-up .record-page-head{margin-bottom:5px;padding-bottom:5px}
-.record-two-up .record-page-head h2{font-size:15px}
-.record-two-up .record-page-head b,.record-two-up .record-page-head span,.record-two-up .record-page-period{font-size:9px}
-.record-two-up .record-grid{font-size:10px!important}
-.record-two-up .record-grid th,.record-two-up .record-grid td{padding:3px 4px!important}
-.record-two-up .record-grid th small{font-size:8px;margin-top:2px}
-.record-two-up .record-grid .record-set-row td{height:24px!important}
-.record-two-up .record-grid .record-entry{font-size:9px;line-height:1.25}
-.record-two-up .record-grid .record-line{height:7px}
-.record-two-up .record-grid .record-exercise-name td{padding:3px 4px!important}
-.record-two-up .record-page-notes{font-size:9px;margin-top:5px}
-.record-two-up .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+<style id="record-booklet-v26">
+/* Booklet: two original-style portrait cards on each landscape A4 sheet. */
+.record-booklet .record-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin:12px 0;padding:8px;background:#e8edf3;border-radius:8px}
+.record-booklet .record-page{box-sizing:border-box;min-width:0;max-width:none;width:100%;margin:0;padding:9px;background:white;border:1px solid #c4cfda;break-before:auto;page-break-before:auto}
+.record-booklet .record-page-head{gap:5px;margin-bottom:6px;padding-bottom:5px}
+.record-booklet .record-page-head h2{font-size:14px;margin:2px 0}
+.record-booklet .record-page-head b,.record-booklet .record-page-head span,.record-booklet .record-page-period{font-size:8px}
+.record-booklet .record-grid{font-size:9px!important;table-layout:fixed;width:100%!important;border-collapse:collapse}
+.record-booklet .record-grid th,.record-booklet .record-grid td{padding:3px 4px!important;font-size:9px;overflow-wrap:anywhere}
+.record-booklet .record-grid th small{font-size:7px}
+.record-booklet .record-grid .record-exercise-name td{padding:4px!important}
+.record-booklet .record-grid .record-set-row td{height:31px!important}
+.record-booklet .record-grid .record-entry{font-size:8px;line-height:1.6}
+.record-booklet .record-grid .record-entry>div{gap:2px}
+.record-booklet .record-grid .record-line{min-width:5px;height:7px}
+.record-booklet .record-page-notes{font-size:8px;margin-top:6px}
+.record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
 @media print{
- @page{size:A4 portrait;margin:8mm}
- .record-two-up .record-print-sheet{height:281mm!important;max-height:281mm!important;display:flex!important;flex-direction:column!important;gap:2mm!important;margin:0!important;break-after:page!important;page-break-after:always!important;overflow:hidden!important}
- .record-two-up .record-print-sheet:last-child{break-after:auto!important;page-break-after:auto!important}
- .record-two-up .record-page{height:139.5mm!important;max-height:139.5mm!important;flex:0 0 139.5mm!important;overflow:hidden!important;padding:3mm!important;border:1px solid #b8c6d6!important;break-before:auto!important;page-break-before:auto!important;break-inside:avoid!important;page-break-inside:avoid!important}
- .record-two-up .record-grid{font-size:8pt!important}
- .record-two-up .record-grid th,.record-two-up .record-grid td{padding:2px 3px!important}
- .record-two-up .record-grid .record-set-row td{height:7mm!important}
- .record-two-up .record-grid .record-entry{font-size:7pt!important;line-height:1.2!important}
- .record-two-up .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-booklet) #printArea{position:static!important;width:100%!important}
+ .record-booklet .record-spread{box-sizing:border-box;display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;width:281mm!important;height:194mm!important;margin:0!important;padding:0!important;background:white!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-booklet .record-spread:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-booklet .record-page{box-sizing:border-box!important;width:140.5mm!important;height:194mm!important;max-height:194mm!important;padding:4mm!important;border:0!important;margin:0!important;overflow:hidden!important;break-before:auto!important;page-break-before:auto!important;break-after:auto!important;page-break-after:auto!important}
+ .record-booklet .record-page:first-child{border-right:1px dashed #b8c3ce!important}
+ .record-booklet .record-grid{font-size:8pt!important}
+ .record-booklet .record-grid th,.record-booklet .record-grid td{padding:2px 3px!important;font-size:8pt!important}
+ .record-booklet .record-grid .record-set-row td{height:10mm!important}
+ .record-booklet .record-grid .record-entry{font-size:7pt!important;line-height:1.45!important}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
 }
 </style>
-</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V25 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=25"></script></body></html>
+</head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V22 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=26"></script></body></html>
