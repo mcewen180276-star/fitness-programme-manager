@@ -1,0 +1,1 @@
+V36: New dependency-free PDF record card export, no browser pagination. One workout day per A4 portrait page, weeks selector retained. Detailed programme printing and mini-app unchanged. PDF tested with 3 days and 6 weeks / 3 per page: 6 A4 pages. Very long days show a legibility warning.

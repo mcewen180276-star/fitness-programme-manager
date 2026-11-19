@@ -21,4 +21,244 @@
  #printArea.print-size-extra .report-note{font-size:13pt}
 }
 
-.report-instructor-note{margin-top:7px;padding:6px;border-left:3px solid #2967a2;font-size:.88em}.record-write-line{padding:9px 0;border-bottom:1px solid #9aa8b7;white-space:nowrap}.record-extra{font-size:.82em;margin:15px 0}.record-card .report-table th:nth-child(1){width:30%}.record-card .report-table th:nth-child(2){width:26%}.record-card .report-table th:nth-child(3){width:44%}@media print{.record-card .record-write-line{padding:9px 0}.record-card .report-table tr{break-inside:avoid}}</style></head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V21 · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=21"></script></body></html>
+.report-instructor-note{margin-top:7px;padding:6px;border-left:3px solid #2967a2;font-size:.88em}.record-write-line{padding:9px 0;border-bottom:1px solid #9aa8b7;white-space:nowrap}.record-extra{font-size:.82em;margin:15px 0}.record-card .report-table th:nth-child(1){width:30%}.record-card .report-table th:nth-child(2){width:26%}.record-card .report-table th:nth-child(3){width:44%}@media print{.record-card .record-write-line{padding:9px 0}.record-card .report-table tr{break-inside:avoid}}
+.record-week-table th:first-child{width:12%}.record-week-table th:nth-child(2){width:23%}.record-week-table th:nth-child(n+3){width:auto}.record-week-table td{padding:7px 6px;font-size:.85em}.record-week-table .record-exercise-name td{background:#edf3f9;padding:8px 7px}.record-week-table .record-write{line-height:2.1;color:#667486}.record-week-table .record-target{font-size:.85em}.record-date-line{font-size:.75em;margin-top:5px}.record-note{font-size:.85em;font-weight:normal}.record-week-sheet{break-before:page;page-break-before:always}.record-week-sheet:first-of-type{break-before:page}.record-week-table tr{break-inside:avoid;page-break-inside:avoid}@media print{.record-week-table th{padding:7px 5px}.record-week-table td{padding:6px 5px}.record-week-table .record-write{line-height:1.9}.record-week-sheet{margin:0}}
+
+/* V22.1: record card layout fixes, override older generic three-column widths */
+.record-card .record-week-table{width:100%;max-width:100%;table-layout:fixed;border-collapse:collapse}
+.record-card .record-week-table th:nth-child(1){width:14%}
+.record-card .record-week-table th:nth-child(2){width:22%}
+.record-card .record-week-table th:nth-child(n+3){width:auto}
+.record-card .record-week-table th,.record-card .record-week-table td{box-sizing:border-box;overflow-wrap:break-word;word-break:normal;white-space:normal}
+.record-card .record-week-table .record-write{font-size:.78rem;line-height:1.65;min-width:0}
+.record-card .record-week-table .record-exercise-name td{font-weight:650}
+.record-card .record-week-sheet{width:100%;max-width:100%;overflow:visible}
+.record-card .record-week-table th{padding:8px 6px}
+.record-card .record-week-table td{padding:7px 6px}
+@media print{
+ .record-card .report-head,.record-card .report-meta{display:none!important}
+ .record-card .record-week-sheet{break-before:page;page-break-before:always;margin:0;padding:0}
+ .record-card .record-week-sheet:first-of-type{break-before:auto;page-break-before:auto}
+ .record-card .record-week-table{width:100%!important;table-layout:fixed!important;font-size:9pt}
+ .record-card .record-week-table th:nth-child(1){width:14%!important}
+ .record-card .record-week-table th:nth-child(2){width:22%!important}
+ .record-card .record-week-table th:nth-child(n+3){width:auto!important}
+ .record-card .record-week-table td,.record-card .record-week-table th{padding:5px!important}
+ .record-card .record-week-table .record-write{font-size:8pt;line-height:1.7}
+ .record-card .record-week-sheet .report-dayhead{padding:3px 0 7px}
+ .record-card .record-week-sheet .report-dayhead h2{font-size:16pt}
+}
+</style><style id="record-card-v23">
+/* Dedicated recording sheets: never inherit detailed-report table widths. */
+.record-card{width:100%;max-width:100%;padding:0!important;border:0!important;background:#fff}
+.record-card .record-page{width:100%;max-width:100%;margin:0 0 24px;padding:16px 18px;background:#fff;border:1px solid #d3dce7;break-before:page;page-break-before:always;overflow:visible}
+.record-card .record-page:first-child{break-before:auto;page-break-before:auto}
+.record-card .record-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px;border-bottom:2px solid #173b64;padding-bottom:10px}
+.record-card .record-page-head b{font-size:10px;letter-spacing:.12em;color:#345b7d}
+.record-card .record-page-head h2{font-size:20px;margin:3px 0}
+.record-card .record-page-head span,.record-card .record-page-period{font-size:11px;color:#52647a}
+.record-card .record-page-period{text-align:right;line-height:1.7;flex-shrink:0}
+.record-card .record-grid{width:100%!important;max-width:100%!important;border-collapse:collapse;table-layout:fixed!important;font-size:12px}
+.record-card .record-grid th,.record-card .record-grid td{border:1px solid #b8c6d6!important;padding:7px 8px!important;vertical-align:middle;overflow-wrap:anywhere}
+.record-card .record-grid th{background:#173b64!important;color:#fff!important;text-align:left}
+.record-card .record-grid th small{display:block;font-size:10px;margin-top:5px;font-weight:400}
+.record-card .record-grid .record-exercise-name td{background:#eaf0f7!important;color:#193b5d;font-weight:700;padding:6px 8px!important}
+.record-card .record-grid .record-set-row td{height:54px}
+.record-card .record-grid .record-entry{font-size:11px;line-height:1.9}
+.record-card .record-grid .record-entry>div{display:flex;align-items:baseline;gap:5px}
+.record-card .record-grid .record-line{flex:1;border-bottom:1px solid #8997a6;min-width:12px;height:12px}
+.record-card .record-page-notes{font-size:11px;margin-top:12px}
+@media print{
+ @page{size:A4 portrait;margin:12mm}
+ .record-card .record-page{width:100%!important;max-width:100%!important;padding:0!important;margin:0!important;border:0!important;break-before:page;page-break-before:always}
+ .record-card .record-page:first-child{break-before:auto;page-break-before:auto}
+ .record-card .record-grid{font-size:10pt!important}
+ .record-card .record-grid th,.record-card .record-grid td{padding:5px 6px!important}
+ .record-card .record-grid .record-set-row td{height:15mm!important}
+ .record-card .record-grid tr{break-inside:avoid;page-break-inside:avoid}
+ .record-card .record-grid th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .record-card .record-grid .record-exercise-name td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+<style id="record-booklet-v26">
+/* Booklet: two original-style portrait cards on each landscape A4 sheet. */
+.record-booklet .record-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin:12px 0;padding:8px;background:#e8edf3;border-radius:8px}
+.record-booklet .record-page{box-sizing:border-box;min-width:0;max-width:none;width:100%;margin:0;padding:9px;background:white;border:1px solid #c4cfda;break-before:auto;page-break-before:auto}
+.record-booklet .record-page-head{gap:5px;margin-bottom:6px;padding-bottom:5px}
+.record-booklet .record-page-head h2{font-size:14px;margin:2px 0}
+.record-booklet .record-page-head b,.record-booklet .record-page-head span,.record-booklet .record-page-period{font-size:8px}
+.record-booklet .record-grid{font-size:9px!important;table-layout:fixed;width:100%!important;border-collapse:collapse}
+.record-booklet .record-grid th,.record-booklet .record-grid td{padding:3px 4px!important;font-size:9px;overflow-wrap:anywhere}
+.record-booklet .record-grid th small{font-size:7px}
+.record-booklet .record-grid .record-exercise-name td{padding:4px!important}
+.record-booklet .record-grid .record-set-row td{height:31px!important}
+.record-booklet .record-grid .record-entry{font-size:8px;line-height:1.6}
+.record-booklet .record-grid .record-entry>div{gap:2px}
+.record-booklet .record-grid .record-line{min-width:5px;height:7px}
+.record-booklet .record-page-notes{font-size:8px;margin-top:6px}
+.record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-booklet) #printArea{position:static!important;width:100%!important}
+ .record-booklet .record-spread{box-sizing:border-box;display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;width:281mm!important;height:194mm!important;margin:0!important;padding:0!important;background:white!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-booklet .record-spread:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-booklet .record-page{box-sizing:border-box!important;width:140.5mm!important;height:194mm!important;max-height:194mm!important;padding:4mm!important;border:0!important;margin:0!important;overflow:hidden!important;break-before:auto!important;page-break-before:auto!important;break-after:auto!important;page-break-after:auto!important}
+ .record-booklet .record-page:first-child{border-right:1px dashed #b8c3ce!important}
+ .record-booklet .record-grid{font-size:8pt!important}
+ .record-booklet .record-grid th,.record-booklet .record-grid td{padding:2px 3px!important;font-size:8pt!important}
+ .record-booklet .record-grid .record-set-row td{height:10mm!important}
+ .record-booklet .record-grid .record-entry{font-size:7pt!important;line-height:1.45!important}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+/* V27: fill each half-sheet with a full day where it fits, without splitting exercises. */
+@media print{
+ .record-booklet .record-page{padding:2.5mm!important;}
+ .record-booklet .record-page-head{margin-bottom:2mm!important;padding-bottom:1mm!important;}
+ .record-booklet .record-grid th,.record-booklet .record-grid td{padding:1mm 1.2mm!important;}
+ .record-booklet .record-grid .record-set-row td{height:8mm!important;}
+ .record-booklet .record-grid .record-exercise-name td{padding:1mm 1.2mm!important;}
+ .record-booklet .record-grid .record-entry{font-size:6.8pt!important;line-height:1.2!important;}
+ .record-booklet .record-page-notes{margin-top:2mm!important;}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important;}
+}
+</style>
+
+<style id="record-booklet-v28">
+/* Continuous chronological layout: Day 2 can start below Day 1 on the same half-page. */
+.record-booklet .record-day-heading td{background:#d7e4f1!important;color:#153b62!important;font-weight:750!important;padding:5px 6px!important;border-top:2px solid #6f91b2!important}
+.record-booklet .record-day-heading span{font-size:.82em;color:#52647a;margin-left:5px}
+@media print{
+ .record-booklet .record-day-heading td{padding:1.2mm!important;font-size:8pt!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .record-booklet .record-page{height:194mm!important;max-height:194mm!important;overflow:hidden!important}
+ .record-booklet .record-grid .record-set-row td{height:7.8mm!important}
+ .record-booklet .record-page-head h2{font-size:11pt!important}
+ .record-booklet .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+</style>
+
+<style id="record-landscape-v29">
+.record-landscape .record-landscape-page{box-sizing:border-box;background:#fff;border:1px solid #c9d4e1;padding:12px 14px;margin:12px 0;max-width:100%;}
+.record-landscape .record-landscape-head{display:flex;justify-content:space-between;gap:16px;border-bottom:2px solid #173b64;margin-bottom:10px;padding-bottom:7px}
+.record-landscape .record-landscape-head b{font-size:11px;letter-spacing:.12em;color:#365d7f}
+.record-landscape .record-landscape-head h2{font-size:21px;margin:3px 0}
+.record-landscape .record-landscape-head span,.record-landscape .record-landscape-period{font-size:12px;color:#455b70}
+.record-landscape .record-landscape-period{text-align:right;flex-shrink:0}
+.record-landscape .record-landscape-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px}
+.record-landscape .record-landscape-table th,.record-landscape .record-landscape-table td{border:1px solid #b9c8d8;padding:5px 7px;vertical-align:middle;overflow-wrap:anywhere}
+.record-landscape .record-landscape-table th{background:#173b64;color:white;text-align:left}
+.record-landscape .record-landscape-table th small{display:block;font-weight:normal;font-size:10px;margin-top:4px}
+.record-landscape .record-exercise-name td{background:#e8f0f8;font-weight:bold;color:#173b64}
+.record-landscape .record-set-row td{height:42px}
+.record-landscape .record-entry{font-size:11px}
+.record-landscape .record-entry>div{display:flex;align-items:baseline;gap:8px;line-height:1.9}
+.record-landscape .record-line{flex:1;border-bottom:1px solid #8496a9;height:12px}
+.record-landscape .record-landscape-notes{font-size:11px;margin-top:10px}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-landscape) #printArea{position:static!important;width:100%!important}
+ .record-landscape .record-landscape-page{box-sizing:border-box!important;width:281mm!important;max-width:281mm!important;min-height:0!important;height:auto!important;margin:0!important;padding:3mm!important;border:0!important;break-before:page!important;page-break-before:always!important;break-after:auto!important;overflow:visible!important}
+ .record-landscape .record-landscape-page:first-child{break-before:auto!important;page-break-before:auto!important}
+ .record-landscape .record-landscape-table{font-size:10pt!important}
+ .record-landscape .record-landscape-table th,.record-landscape .record-landscape-table td{padding:1.5mm 2mm!important}
+ .record-landscape .record-set-row td{height:12mm!important}
+ .record-landscape .record-entry{font-size:9pt!important}
+ .record-landscape .record-entry>div{line-height:1.8!important}
+ .record-landscape .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-landscape .record-landscape-table th,.record-landscape .record-exercise-name td{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+}
+</style>
+
+<style id="record-fold-v30">
+.record-fold-spread{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;background:white;border:1px solid #b9c8d8}
+.record-fold-page{box-sizing:border-box;min-width:0;padding:10px;border-right:1px dashed #aebac7;background:#fff}
+.record-fold-page:last-child{border-right:0}
+.record-fold-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;border-bottom:2px solid #173b64;padding-bottom:4px}
+.record-fold-head b{font-size:9px;letter-spacing:.08em}.record-fold-head h2{font-size:15px;margin:2px 0}.record-fold-head span,.record-fold-period{font-size:9px}
+.record-fold-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:9px}
+.record-fold-table th,.record-fold-table td{border:1px solid #b9c8d8;padding:3px;overflow-wrap:anywhere}
+.record-fold-table th{background:#173b64;color:white;text-align:left}.record-fold-table th small{display:block;font-size:8px}
+.record-fold-table .record-exercise-name td{background:#e8f0f8;color:#173b64;font-weight:bold}
+.record-fold-table .record-set-row td{height:27px}.record-fold-table .record-entry{font-size:8px}
+.record-fold-table .record-entry>div{display:flex;gap:3px;align-items:baseline;line-height:1.35}
+.record-fold-table .record-line{flex:1;border-bottom:1px solid #8a9bac;height:6px}
+.record-fold-notes{font-size:8px;margin-top:6px}
+@media print{
+ @page{size:A4 landscape;margin:8mm}
+ body:has(.record-fold) #printArea{position:static!important;width:100%!important}
+ .record-fold-spread{box-sizing:border-box!important;display:grid!important;grid-template-columns:1fr 1fr!important;width:281mm!important;height:194mm!important;margin:0!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-fold-spread:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-fold-page{box-sizing:border-box!important;width:140.5mm!important;height:194mm!important;max-height:194mm!important;padding:3mm!important;overflow:hidden!important;border:0!important;break-inside:avoid!important}
+ .record-fold-page:first-child{border-right:1px dashed #aebac7!important}
+ .record-fold-table{font-size:8pt!important}
+ .record-fold-table th,.record-fold-table td{padding:1mm!important}
+ .record-fold-table .record-set-row td{height:8.2mm!important}
+ .record-fold-table .record-entry{font-size:7pt!important}
+ .record-fold-table .record-entry>div{line-height:1.25!important}
+ .record-fold-table th,.record-fold-table .record-exercise-name td{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .record-fold-table .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+</style>
+
+<style id="record-a4-v31">
+.record-a4-page{box-sizing:border-box;background:#fff;border:1px solid #cad4df;padding:14px;margin:14px 0;width:100%;color:#172c40}
+.record-a4-head{display:flex;justify-content:space-between;align-items:start;gap:12px;border-bottom:2px solid #173b64;padding-bottom:7px;margin-bottom:8px}
+.record-a4-head h2{font-size:18px;margin:2px 0}.record-a4-head b,.record-a4-head span,.record-a4-head>div:last-child{font-size:10px}
+.record-a4-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:10px}
+.record-a4-table td,.record-a4-table th{border:1px solid #b8c7d7;padding:3px 4px;overflow-wrap:anywhere}
+.record-a4-table th{background:#173b64;color:#fff;text-align:left}
+.record-a4-table th small{display:block;font-weight:normal}
+.record-a4-table .record-exercise-name td{background:#e8f0f8;color:#173b64;font-weight:700}
+.record-a4-table .record-entry>div{display:flex;gap:4px;align-items:baseline}
+.record-a4-table .record-line{flex:1;border-bottom:1px solid #94a2b2;min-width:5px}
+.record-a4-notes{font-size:9px;margin-top:7px}
+@media print{
+ @page{size:A4 portrait;margin:8mm}
+ body:has(.record-a4) #printArea{position:static!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+ .record-a4-page{box-sizing:border-box!important;width:194mm!important;height:281mm!important;max-height:281mm!important;padding:2mm!important;margin:0!important;border:0!important;break-after:page!important;page-break-after:always!important;break-inside:avoid!important;page-break-inside:avoid!important;overflow:hidden!important}
+ .record-a4-page:last-child{break-after:auto!important;page-break-after:auto!important}
+ .record-a4-head{margin-bottom:2mm!important;padding-bottom:1mm!important}
+ .record-a4-head h2{font-size:12pt!important}
+ .record-a4-table{font-size:var(--record-pt)!important}
+ .record-a4-table th,.record-a4-table td{padding:.55mm 1mm!important}
+ .record-a4-table .record-set-row td{height:var(--row-mm)!important}
+ .record-a4-table .record-entry>div{line-height:1.05!important}
+ .record-a4-table .record-exercise-group{break-inside:avoid!important;page-break-inside:avoid!important}
+ .record-a4-table th,.record-a4-table .record-exercise-name td{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+</style>
+
+<style id="record-a4-v32-final">
+/* A4 sheets: each day is exactly one page, no forced extra blank sheets. */
+@media print {
+ @page { size: A4 portrait; margin: 8mm; }
+ body:has(.record-a4) #printArea { position:static!important;display:block!important;width:100%!important; margin:0!important;padding:0!important; }
+ .record-a4 {display:block!important;margin:0!important;padding:0!important;}
+ .record-a4-page {
+   display:flex!important;flex-direction:column!important;
+   box-sizing:border-box!important;
+   width:100%!important;height:274mm!important;max-height:274mm!important;
+   min-height:274mm!important;
+   padding:1mm 0!important;margin:0!important;border:0!important;
+   overflow:hidden!important;
+   break-before:auto!important;page-break-before:auto!important;
+   break-after:page!important;page-break-after:always!important;
+   break-inside:avoid!important;page-break-inside:avoid!important;
+ }
+ .record-a4-page:last-child {break-after:auto!important;page-break-after:auto!important;}
+ .record-a4-head {flex:0 0 auto!important;margin:0 0 2mm!important;padding:0 0 1mm!important;}
+ .record-a4-table {
+   flex:1 1 auto!important;height:250mm!important;max-height:250mm!important;
+   width:100%!important;table-layout:fixed!important;
+   font-size:var(--record-pt)!important;
+ }
+ .record-a4-table thead {height:9mm!important;}
+ .record-a4-table tbody {break-inside:avoid!important;page-break-inside:avoid!important;}
+ .record-a4-table .record-set-row td {height:auto!important;padding:1mm 1.2mm!important;vertical-align:middle!important;}
+ .record-a4-table .record-exercise-name td {padding:1mm 1.2mm!important;}
+ .record-a4-table .record-entry>div {line-height:1.35!important;margin:.4mm 0!important;}
+ .record-a4-notes {flex:0 0 auto!important;margin-top:2mm!important;min-height:5mm!important;}
+}
+</style>
+<style id="v33-record-preview">
+@media screen{.record-a4-page{width:100%;max-width:800px;min-height:900px;margin:16px auto;padding:24px;display:flex;flex-direction:column}.record-a4-table{flex:1;height:100%;font-size:var(--record-pt,8pt)}.record-a4-table td{padding:5px}.record-a4-table .record-set-row td{height:auto}}
+</style></head><body><header><h1>Fitness Programme Manager</h1><small>Rebuilt V36 CACHE FIX · Offline-first · Private client records</small></header><nav id="nav"></nav><main class="wrap" id="app"></main><script>window.addEventListener('error',function(e){const a=document.getElementById('app');if(a&&!a.textContent.trim()){a.innerHTML='<section class="panel"><h2>App loading problem</h2><p>'+String(e.message).replace(/[<>]/g,'')+'</p><p>Try reloading. Your saved data has not been intentionally cleared.</p></section>'}});</script><script src="app.js?v=36-cachefix-2"></script></body></html>
