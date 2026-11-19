@@ -1,0 +1,1 @@
+V32: Fill each portrait A4 record sheet vertically; one workout day per sheet; keep 1-4 week selection; no blank spacer pages. Mini-app and client-link logic unchanged.
